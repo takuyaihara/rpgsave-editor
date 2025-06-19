@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { decompressFromBase64 } from 'lz-string';
 
 const FileDropZone: React.FC = () => {
   useEffect(() => {
@@ -9,17 +10,27 @@ const FileDropZone: React.FC = () => {
       const files = event.dataTransfer.files;
       if (files.length > 0) {
         const file = files[0];
-        const reader = new FileReader();
 
-        // ✅ 拡張子チェック
         if (!file.name.endsWith('.rpgsave')) {
           alert('対応していないファイル形式です（.rpgsave のみ対応）');
           return;
         }
 
+        const reader = new FileReader();
+
         reader.onload = () => {
-          console.log('読み込み成功:', file.name);
-          console.log(reader.result); // ArrayBuffer など
+          const arrayBuffer = reader.result as ArrayBuffer;
+          const uint8Array = new Uint8Array(arrayBuffer);
+          const decodedText = new TextDecoder('utf-8').decode(uint8Array);
+
+          const jsonText = decompressFromBase64(decodedText);
+
+          try {
+            const json = JSON.parse(jsonText!);
+            console.log('デコード成功:', json);
+          } catch (e) {
+            console.error('JSONパースに失敗しました:', e);
+          }
         };
 
         reader.readAsArrayBuffer(file);
@@ -30,16 +41,13 @@ const FileDropZone: React.FC = () => {
       event.preventDefault();
     };
 
-    // イベント登録
     window.addEventListener('drop', handleDrop);
     window.addEventListener('dragover', handleDragOver);
-
-    // クリーンアップ（アンマウント時に解除）
     return () => {
       window.removeEventListener('drop', handleDrop);
       window.removeEventListener('dragover', handleDragOver);
     };
-  }, []); // 初回のみ
+  }, []);
 
   return (
     <div
