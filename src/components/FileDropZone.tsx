@@ -1,7 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { decompressFromBase64 } from 'lz-string';
+import JsonViewer from './JsonViewer';
 
 const FileDropZone: React.FC = () => {
+  const [jsonData, setJsonData] = useState<any | null>(null);
+
+  const handleJsonEdit = (edit: any) => {
+    console.log('編集内容:', edit);
+    setJsonData(edit.updated_src); // 編集後のJSONをstateに反映
+  };
+
   useEffect(() => {
     const handleDrop = (event: DragEvent) => {
       event.preventDefault();
@@ -28,6 +36,7 @@ const FileDropZone: React.FC = () => {
           try {
             const json = JSON.parse(jsonText!);
             console.log('デコード成功:', json);
+            setJsonData(json);
           } catch (e) {
             console.error('JSONパースに失敗しました:', e);
           }
@@ -60,6 +69,8 @@ const FileDropZone: React.FC = () => {
       }}
     >
       `.rpgsave` ファイルをここにドロップしてください
+
+      {jsonData && <JsonViewer data={jsonData} onEdit={handleJsonEdit} />}
     </div>
   );
 };
