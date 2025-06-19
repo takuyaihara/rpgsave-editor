@@ -11,6 +11,12 @@ const FileDropZone: React.FC = () => {
         const file = files[0];
         const reader = new FileReader();
 
+        // ✅ 拡張子チェック
+        if (!file.name.endsWith('.rpgsave')) {
+          alert('対応していないファイル形式です（.rpgsave のみ対応）');
+          return;
+        }
+
         reader.onload = () => {
           console.log('読み込み成功:', file.name);
           console.log(reader.result); // ArrayBuffer など
