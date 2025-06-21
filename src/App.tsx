@@ -3,7 +3,7 @@ import FileDropZone from "./components/FileDropZone";
 import { SaveDataEditor } from "./components/SaveDataEditor";
 
 const App: React.FC = () => {
-  const [decodedJson, setDecodedJson] = useState<any | null>(null);
+  const [decodedJson, setDecodedJson] = useState<object | null>(null);
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { decompressFromBase64 } from "lz-string";
 
 type FileDropZoneProps = {
-  onJsonDecoded: (json: any) => void; // 親（App.tsx）に渡す用
+  onJsonDecoded: (json: object) => void;
 };
 
 const FileDropZone: React.FC<FileDropZoneProps> = ({ onJsonDecoded }) => {
@@ -32,7 +32,7 @@ const FileDropZone: React.FC<FileDropZoneProps> = ({ onJsonDecoded }) => {
           try {
             const json = JSON.parse(jsonText!);
             console.log("デコード成功:", json);
-            onJsonDecoded(json); // ← App に渡す
+            onJsonDecoded(json);
           } catch (e) {
             console.error("JSONパースに失敗しました:", e);
           }

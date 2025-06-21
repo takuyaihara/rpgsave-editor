@@ -6,7 +6,7 @@ type SaveDataEditorProps = {
 };
 
 export const SaveDataEditor = ({ initialData }: SaveDataEditorProps) => {
-  const [json, setJson] = useState<any>(null);
+  const [json, setJson] = useState<object | null>(null);
 
   useEffect(() => {
     if (initialData) {
@@ -22,11 +22,24 @@ export const SaveDataEditor = ({ initialData }: SaveDataEditorProps) => {
 
       <button
         onClick={() =>
-          setJson((prev: any) => {
-            if (!prev.player) return prev;
+          setJson(prev => {
+            if (
+              !prev ||
+              typeof prev !== "object" ||
+              !("player" in prev) ||
+              typeof (prev as { player?: unknown }).player !== "object"
+            ) {
+              return prev;
+            }
+
+            const prevObj = prev as {
+              player?: { _gold?: number; [key: string]: unknown };
+              [key: string]: unknown;
+            };
+
             return {
-              ...prev,
-              player: { ...prev.player, _gold: 999999 },
+              ...prevObj,
+              player: { ...prevObj.player, _gold: 999999 },
             };
           })
         }
@@ -37,7 +50,7 @@ export const SaveDataEditor = ({ initialData }: SaveDataEditorProps) => {
 
       <JsonEditor
         data={json}
-        setData={data => setJson(data as typeof json)}
+        setData={data => setJson(data as object)}
         onUpdate={({ newData }) => {
           console.log("更新されたJSON:", newData);
         }}
