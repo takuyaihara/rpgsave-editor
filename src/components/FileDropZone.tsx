@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { decompressFromBase64 } from "lz-string";
-import JsonViewer from "./JsonViewer";
 
-const FileDropZone: React.FC = () => {
-  const [jsonData, setJsonData] = useState<Record<string, unknown> | null>(null);
+type FileDropZoneProps = {
+  onJsonDecoded: (json: any) => void; // 親（App.tsx）に渡す用
+};
 
-  const handleJsonEdit = (edit: { updated_src: unknown }) => {
-    const updated = edit.updated_src as Record<string, unknown>;
-    setJsonData(updated);
-  };
-
+const FileDropZone: React.FC<FileDropZoneProps> = ({ onJsonDecoded }) => {
   useEffect(() => {
     const handleDrop = (event: DragEvent) => {
       event.preventDefault();
@@ -36,7 +32,7 @@ const FileDropZone: React.FC = () => {
           try {
             const json = JSON.parse(jsonText!);
             console.log("デコード成功:", json);
-            setJsonData(json);
+            onJsonDecoded(json); // ← App に渡す
           } catch (e) {
             console.error("JSONパースに失敗しました:", e);
           }
@@ -56,7 +52,7 @@ const FileDropZone: React.FC = () => {
       window.removeEventListener("drop", handleDrop);
       window.removeEventListener("dragover", handleDragOver);
     };
-  }, []);
+  }, [onJsonDecoded]);
 
   return (
     <div
@@ -69,7 +65,6 @@ const FileDropZone: React.FC = () => {
       }}
     >
       `.rpgsave` ファイルをここにドロップしてください
-      {jsonData && <JsonViewer data={jsonData} onEdit={handleJsonEdit} />}
     </div>
   );
 };
