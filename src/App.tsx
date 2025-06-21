@@ -1,6 +1,6 @@
-import './App.css'
-import React from 'react';
-import FileDropZone from './components/FileDropZone';
+import "./App.css";
+import React from "react";
+import FileDropZone from "./components/FileDropZone";
 
 const App: React.FC = () => {
   return (
