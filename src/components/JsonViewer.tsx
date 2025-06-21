@@ -2,8 +2,8 @@ import React from "react";
 import ReactJson from "react-json-view";
 
 type Props = {
-  data: any;
-  onEdit?: (edit: any) => void;
+  data: Record<string, unknown>;
+  onEdit?: (edit: { updated_src: unknown }) => void;
 };
 
 const JsonViewer: React.FC<Props> = ({ data, onEdit }) => {

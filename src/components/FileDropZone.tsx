@@ -3,11 +3,11 @@ import { decompressFromBase64 } from "lz-string";
 import JsonViewer from "./JsonViewer";
 
 const FileDropZone: React.FC = () => {
-  const [jsonData, setJsonData] = useState<any | null>(null);
+  const [jsonData, setJsonData] = useState<Record<string, unknown> | null>(null);
 
-  const handleJsonEdit = (edit: any) => {
-    console.log("編集内容:", edit);
-    setJsonData(edit.updated_src); // 編集後のJSONをstateに反映
+  const handleJsonEdit = (edit: { updated_src: unknown }) => {
+    const updated = edit.updated_src as Record<string, unknown>;
+    setJsonData(updated);
   };
 
   useEffect(() => {
