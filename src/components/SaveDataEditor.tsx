@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { JsonEditor } from "json-edit-react";
 
-type JsonEditorPoCProps = {
-  initialData: unknown; // `.rpgsave` からデコードされたJSON
+type SaveDataEditorProps = {
+  initialData: unknown;
 };
 
-export const JsonEditorPoC = ({ initialData }: JsonEditorPoCProps) => {
+export const SaveDataEditor = ({ initialData }: SaveDataEditorProps) => {
   const [json, setJson] = useState<any>(null);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const JsonEditorPoC = ({ initialData }: JsonEditorPoCProps) => {
 
   return (
     <div style={{ padding: 16 }}>
-      <h2>セーブデータ編集（PoC）</h2>
+      <h2>セーブデータ編集</h2>
 
       <button
         onClick={() =>

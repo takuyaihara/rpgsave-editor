@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileDropZone from "./components/FileDropZone";
-import { JsonEditorPoC } from "./components/JsonEditorPoC";
+import { SaveDataEditor } from "./components/SaveDataEditor";
 
 const App: React.FC = () => {
   const [decodedJson, setDecodedJson] = useState<any | null>(null);
@@ -15,7 +15,7 @@ const App: React.FC = () => {
       {decodedJson && (
         <>
           <h2>PoC: json-edit-react</h2>
-          <JsonEditorPoC initialData={decodedJson} />
+          <SaveDataEditor initialData={decodedJson} />
         </>
       )}
     </div>
