@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SaveDataEditor } from "./components/SaveDataEditor";
 import { OptionPanel } from "./components/OptionPanel";
 import { JsonEditorOptions } from "./types/jsonEditor";
+import { decompressFromBase64 } from "lz-string";
 
 const App: React.FC = () => {
   const [decodedJson, setDecodedJson] = useState<object | null>(null);
@@ -29,10 +30,8 @@ const App: React.FC = () => {
             <img
               src="./assets/dropzone.png"
               alt="ファイルドロップエリア"
-              className="w-full h-auto"
-            />
-            <div
-              className="absolute top-0 left-0 w-full h-full"
+              className="w-[90%] max-w-[360px]"
+              draggable={false}
               onDrop={e => {
                 e.preventDefault();
                 const file = e.dataTransfer.files[0];
@@ -40,10 +39,12 @@ const App: React.FC = () => {
                   const reader = new FileReader();
                   reader.onload = () => {
                     try {
-                      const json = JSON.parse(reader.result as string);
+                      const compressed = reader.result as string;
+                      const jsonStr = decompressFromBase64(compressed);
+                      const json = JSON.parse(jsonStr);
                       setDecodedJson(json);
                     } catch (err) {
-                      alert("JSONの読み込みに失敗しました。");
+                      alert("JSONの読み込みに失敗しました（圧縮データか形式不正の可能性）。");
                     }
                   };
                   reader.readAsText(file);
