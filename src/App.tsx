@@ -16,6 +16,10 @@ const App: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col font-sans bg-white text-gray-800">
+      <div className="bg-green-200 text-blue-800 font-bold p-4 rounded-lg">
+        ✅ Tailwind CSS は有効です！
+      </div>
+
       {/* Header */}
       <header className="text-xl font-bold px-4 py-2 border-b border-gray-300 shadow-sm">
         RPGセーブエディター
