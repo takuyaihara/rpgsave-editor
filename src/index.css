@@ -41,7 +41,7 @@ body {
 .save-data-editor-container {
   display: flex;
   gap: 12px;
-  height: calc(100vh - 20px);
+  height: calc(100vh - 40px);
   max-height: 100vh;
   padding: 8px;
   background-color: black;
@@ -55,13 +55,32 @@ body {
 }
 
 .json-display-panel {
-  flex: 2;
-  overflow-y: auto;
+  width: calc(100% - 340px);
+  position: relative;
+  overflow-y: visible;
   border: 3px solid white;
   border-radius: 12px;
-  padding: 12px;
+  padding: 24px 12px 12px 12px;
   white-space: pre-wrap;
   background-color: black;
+}
+
+.json-display-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: bold;
+
+  border-radius: 8px;
+  letter-spacing: 0.15em;
+  color: white;
+  font-family: "PixelMplus10-Regular", monospace;
+  user-select: none;
+  pointer-events: none;
 }
 
 .command-panel {
@@ -72,5 +91,4 @@ body {
   background-color: black;
   overflow-y: auto;
   box-sizing: border-box;
-  max-height: 100%;
 }
