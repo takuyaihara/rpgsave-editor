@@ -37,3 +37,40 @@ body {
   height: auto;
   cursor: pointer;
 }
+
+.save-data-editor-container {
+  display: flex;
+  gap: 12px;
+  height: calc(100vh - 20px);
+  max-height: 100vh;
+  padding: 8px;
+  background-color: black;
+  color: white;
+  font-family: "PixelMplus10-Regular", monospace;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  align-items: stretch;
+}
+
+.json-display-panel {
+  flex: 2;
+  overflow-y: auto;
+  border: 3px solid white;
+  border-radius: 12px;
+  padding: 12px;
+  white-space: pre-wrap;
+  background-color: black;
+}
+
+.command-panel {
+  width: 320px;
+  border: 3px solid white;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: black;
+  overflow-y: auto;
+  box-sizing: border-box;
+  max-height: 100%;
+}
