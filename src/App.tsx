@@ -1,71 +1,82 @@
 import React, { useState } from "react";
 import { SaveDataEditor } from "./components/SaveDataEditor";
-import { OptionPanel } from "./components/OptionPanel";
-import { JsonEditorOptions } from "./types/jsonEditor";
 import { decompressFromBase64 } from "lz-string";
 
 const App: React.FC = () => {
   const [decodedJson, setDecodedJson] = useState<object | null>(null);
 
-  const [options, setOptions] = useState<JsonEditorOptions>({
-    allowEdit: true,
-    allowAdd: true,
-    allowDelete: true,
-    showArrayIndices: true,
-  });
-
   return (
-    <div className="h-screen w-screen bg-[#000000] flex items-center justify-center">
+    <div className="h-screen w-screen bg-[#000000] flex items-center justify-center ">
       {!decodedJson ? (
         <div className="flex flex-col items-center">
           {/* タイトル画像 */}
-          <img
-            src="./assets/title.png"
-            alt="タイトルロゴ"
-            className="w-[80%] max-w-[360px] h-auto"
-          />
-
+          <div className="flex justify-center">
+            <img src="./assets/title.png" className="w-[50%]" />
+          </div>
           {/* ドロップエリア画像 + 判定ゾーン */}
-          <div className="relative w-[90%] max-w-[360px]">
-            <img
-              src="./assets/dropzone.png"
-              alt="ファイルドロップエリア"
-              className="w-[90%] max-w-[360px]"
-              draggable={false}
-              onDrop={e => {
-                e.preventDefault();
-                const file = e.dataTransfer.files[0];
-                if (file) {
+          <div className="relative w-[85%]">
+            <div className="flex justify-center">
+              <img
+                src="./assets/dropzone.png"
+                className="w-[85%]"
+                draggable={false}
+                onDrop={e => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  if (!file || !file.name.endsWith(".rpgsave")) {
+                    alert("それは　セーブデータ（.rpgsave）では　ないようだね。");
+                    return;
+                  }
+
                   const reader = new FileReader();
                   reader.onload = () => {
                     try {
                       const compressed = reader.result as string;
                       const jsonStr = decompressFromBase64(compressed);
+                      if (!jsonStr) throw new Error("Failed to decompress");
+
                       const json = JSON.parse(jsonStr);
                       setDecodedJson(json);
-                    } catch (err) {
-                      alert("JSONの読み込みに失敗しました（圧縮データか形式不正の可能性）。");
+                    } catch {
+                      alert(
+                        "データが　よみこめなかった！\nこわれている　か　まちがっている　かも　しれないぞ。"
+                      );
                     }
                   };
                   reader.readAsText(file);
-                }
-              }}
-              onDragOver={e => e.preventDefault()}
-            />
+                }}
+                onDragOver={e => e.preventDefault()}
+              />
+            </div>
           </div>
         </div>
       ) : (
-        <div className="flex flex-1 w-full overflow-hidden bg-white text-gray-800">
-          {/* Editor */}
-          <div className="w-2/3 p-4 overflow-auto">
-            <h2 className="text-lg font-semibold mb-2">セーブデータ編集</h2>
-            <SaveDataEditor initialData={decodedJson} options={options} />
+        <div className="flex min-h-screen w-full bg-[#000000] text-white font-famicomjp text-[10px] leading-none">
+          {/* セーブデータ編集パネル（左側） */}
+          <div className="relative w-3/4 p-2">
+            {/* タイトルラベル（白枠に重ねる） */}
+            <div className="absolute -top-2 left-1/2 -translate-x-1/2 flex items-center bg-black px-2 z-10">
+              <div className="h-px w-4 bg-white mr-2"></div>
+              <span className="text-white text-[12px] font-bold tracking-widest">セーブデータ</span>
+              <div className="h-px w-4 bg-white ml-2"></div>
+            </div>
+
+            {/* 枠＋内容 */}
+            <div className="border border-white rounded p-2 pt-5 bg-black">
+              <div className="jsoneditor h-[500px] overflow-y-auto text-white font-famicomjp text-[10px] leading-tight">
+                <SaveDataEditor initialData={decodedJson} />
+              </div>
+            </div>
           </div>
 
-          {/* Options */}
-          <div className="w-1/3 p-4 bg-gray-50 border-l border-gray-300 overflow-auto">
-            <h3 className="text-md font-semibold mb-2">オプション</h3>
-            <OptionPanel options={options} onChange={setOptions} />
+          {/* 右：コマンドパネル */}
+          <div className="w-1/4 p-2 space-y-2">
+            <h2 className="text-[12px] text-yellow-300">🔍 検索</h2>
+            <input
+              type="text"
+              className="w-full bg-black border border-white p-1 text-white"
+              placeholder="キー名を検索"
+            />
           </div>
         </div>
       )}
