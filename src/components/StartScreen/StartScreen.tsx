@@ -9,7 +9,7 @@ type StartScreenProps = {
 
 export const StartScreen: React.FC<StartScreenProps> = ({ onLoad }) => {
   return (
-    <div className="start-screen-container">
+    <div className="start-screen">
       <Logo />
       <DropZone onLoad={onLoad} />
     </div>

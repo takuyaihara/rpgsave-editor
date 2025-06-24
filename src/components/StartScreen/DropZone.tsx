@@ -34,7 +34,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad }) => {
   return (
     <img
       src="./assets/dropzone.png"
-      className="start-screen-dropzone"
+      className="dropzone"
       draggable={false}
       onDrop={handleDrop}
       onDragOver={e => e.preventDefault()}
