@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-export interface SaveData {
-  [key: string]: unknown;
-}
-
 interface SaveDataEditorProps {
-  saveData: SaveData;
+  saveData: object;
 }
 
 export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData }) => {
