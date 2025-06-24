@@ -23,12 +23,14 @@ function createWindow() {
     resizable: false,
     fullscreenable: false,
     maximizable: false,
-    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+    title: "",
+    icon: path.join(process.env.VITE_PUBLIC, "assets", "icon.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
+  win.setMenuBarVisibility(false);
   win.loadFile(path.join(RENDERER_DIST, "index.html"));
 }
 
