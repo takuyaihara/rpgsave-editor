@@ -1,5 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const CommandWindow: React.FC = () => {
-  return <div className="command-window">{/* 今後ここに検索・保存ボタンなどを追加 */}</div>;
+  const [query, setQuery] = useState("");
+
+  return (
+    <div className="command-window">
+      <div className="search-row">
+        <label htmlFor="search-input" className="search-label">
+          けんさく
+        </label>
+        <input
+          id="search-input"
+          type="text"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          className="search-input"
+        />
+      </div>
+    </div>
+  );
 };

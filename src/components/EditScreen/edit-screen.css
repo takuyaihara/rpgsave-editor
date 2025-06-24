@@ -30,6 +30,36 @@
   border-radius: 12px;
   background-color: black;
   width: 320px;
+  padding: 16px; /* ✅ 内側に余白を確保 */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* ✅ 各要素の間にゆとり */
+}
+
+.search-label {
+  color: white;
+  font-family: monospace;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.search-input {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  font-family: monospace;
+  font-size: 16px;
+  padding: 4px 8px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
 }
 
 ::-webkit-scrollbar {
