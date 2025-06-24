@@ -1,0 +1,22 @@
+.search-label {
+  color: white;
+  font-size: 16px;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.search-input {
+  border: 2px solid white;
+  background-color: black;
+  padding: 4px 8px;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+  font-family: monospace;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
