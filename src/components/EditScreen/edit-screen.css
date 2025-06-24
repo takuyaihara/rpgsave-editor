@@ -1,54 +1,38 @@
 .edit-screen {
   display: flex;
   gap: 12px;
-  height: calc(100vh - 40px);
-  max-height: 100vh;
-  padding: 8px;
-  background-color: black;
-  color: white;
-  font-family: "PixelMplus10-Regular", monospace;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-y: hidden;
-  align-items: stretch;
+  height: 100vh;
 }
 
 .save-data-window {
-  width: calc(100% - 340px);
-  position: relative;
-  overflow-y: visible;
   border: 3px solid white;
   border-radius: 12px;
-  padding: 24px 12px 12px 12px;
-  white-space: pre-wrap;
   background-color: black;
-}
-
-.save-data-window__label {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: black;
-  padding: 4px 12px;
-  font-size: 14px;
-  font-weight: bold;
-
-  border-radius: 8px;
-  letter-spacing: 0.15em;
-  color: white;
-  font-family: "PixelMplus10-Regular", monospace;
-  user-select: none;
-  pointer-events: none;
+  width: calc(100% - 320px);
+  overflow-y: auto;
 }
 
 .command-window {
-  width: 320px;
   border: 3px solid white;
   border-radius: 12px;
-  padding: 12px;
   background-color: black;
-  overflow-y: auto;
-  box-sizing: border-box;
+  width: 320px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
 }
