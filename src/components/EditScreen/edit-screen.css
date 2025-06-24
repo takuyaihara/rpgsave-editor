@@ -1,6 +1,6 @@
 .edit-screen {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   height: 100vh;
 }
 
@@ -11,6 +11,10 @@
   background-color: black;
   width: calc(100% - 320px);
   overflow-y: auto;
+}
+
+.save-data-window pre {
+  font-size: 18px;
 }
 
 .command-window {
