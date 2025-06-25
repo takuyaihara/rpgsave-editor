@@ -3,9 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 interface SaveDataEditorProps {
   saveData: object;
   query: string;
+  setIndex: (value: number) => void;
 }
 
-export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData, query }) => {
+export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData, query, setIndex }) => {
   const [jsonText, setJsonText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -22,8 +23,9 @@ export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData, query 
     if (index !== -1) {
       const lineHeight = 18;
       textareaRef.current.scrollTop = index * lineHeight;
+      setIndex(index);
     }
-  }, [query, jsonText]);
+  }, [query, jsonText, setIndex]);
 
   return (
     <div className="save-data-window">
