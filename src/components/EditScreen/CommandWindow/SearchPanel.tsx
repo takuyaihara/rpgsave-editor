@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import "./search-panel.css";
 
-export const SearchPanel: React.FC = () => {
+interface SearchPanelProps {
+  onQueryChange: (value: string) => void;
+}
+
+export const SearchPanel: React.FC<SearchPanelProps> = ({ onQueryChange }) => {
   const [query, setQuery] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    onQueryChange(value);
+  };
 
   return (
     <div className="search-row">
@@ -13,7 +23,7 @@ export const SearchPanel: React.FC = () => {
         id="search-input"
         type="text"
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={handleChange}
         className="search-input"
       />
     </div>

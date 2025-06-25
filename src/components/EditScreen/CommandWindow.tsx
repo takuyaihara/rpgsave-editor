@@ -1,10 +1,14 @@
 import React from "react";
 import { SearchPanel } from "./CommandWindow/SearchPanel";
 
-export const CommandWindow: React.FC = () => {
+interface CommandWindowProps {
+  onQueryChange: (value: string) => void;
+}
+
+export const CommandWindow: React.FC<CommandWindowProps> = ({ onQueryChange }) => {
   return (
     <div className="command-window">
-      <SearchPanel />
+      <SearchPanel onQueryChange={onQueryChange} />
     </div>
   );
 };
