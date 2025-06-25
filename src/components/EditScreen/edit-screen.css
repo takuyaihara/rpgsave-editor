@@ -35,6 +35,18 @@
   width: 320px;
 }
 
+.arrow-btn {
+  cursor: pointer;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+}
+
+.arrow-btn:hover {
+  background-color: gray;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

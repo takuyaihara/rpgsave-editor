@@ -26,6 +26,8 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({ onQueryChange }) => {
         onChange={handleChange}
         className="search-input"
       />
+      <button className="arrow-btn">↑</button>
+      <button className="arrow-btn">↓</button>
     </div>
   );
 };
