@@ -2,22 +2,39 @@ import React, { useState } from "react";
 import "./search-panel.css";
 
 interface SearchPanelProps {
-  onQueryChange: (value: string) => void;
-  index: number;
+  saveData: object | null;
+  query: string;
+  setQuery: (value: string) => void;
+  setNextIndex: (value: number) => void;
 }
 
-export const SearchPanel: React.FC<SearchPanelProps> = ({ onQueryChange, index }) => {
-  const [query, setQuery] = useState("");
+export const SearchPanel: React.FC<SearchPanelProps> = ({
+  saveData,
+  query,
+  setQuery,
+  setNextIndex,
+}) => {
+  const [localNextIndex, setLocalNextIndex] = useState<number>(-1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-    onQueryChange(value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(index);
+      const json = JSON.stringify(saveData, null, 2);
+      const lines = json.split("\n");
+
+      console.log("localNextIndex: " + localNextIndex);
+      const index =
+        localNextIndex !== -1
+          ? lines.findIndex((line, i) => i > localNextIndex && line.includes(query))
+          : lines.findIndex(line => line.includes(query));
+
+      setLocalNextIndex(index);
+      setNextIndex(index);
+      console.log("index: " + index);
     }
   };
 

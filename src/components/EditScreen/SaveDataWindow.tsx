@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
-interface SaveDataEditorProps {
-  saveData: object;
+interface SaveDataWindowProps {
+  saveData: object | null;
   query: string;
-  setIndex: (value: number) => void;
+  nextIndex: number;
 }
 
-export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData, query, setIndex }) => {
+export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({ saveData, query, nextIndex }) => {
   const [jsonText, setJsonText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -18,14 +18,18 @@ export const SaveDataEditor: React.FC<SaveDataEditorProps> = ({ saveData, query,
     if (!query || !textareaRef.current) return;
 
     const lines = jsonText.split("\n");
-    const index = lines.findIndex(line => line.includes(query));
+    console.log("nextIndex: " + nextIndex);
+    const index =
+      nextIndex !== -1
+        ? lines.findIndex((line, i) => i > nextIndex && line.includes(query))
+        : lines.findIndex(line => line.includes(query));
 
+    console.log("index: " + index);
     if (index !== -1) {
       const lineHeight = 18;
       textareaRef.current.scrollTop = index * lineHeight;
-      setIndex(index);
     }
-  }, [query, jsonText, setIndex]);
+  }, [query, jsonText, nextIndex]);
 
   return (
     <div className="save-data-window">
