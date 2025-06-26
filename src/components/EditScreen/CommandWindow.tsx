@@ -1,4 +1,5 @@
 import React from "react";
+
 import { SearchPanel } from "./CommandWindow/SearchPanel";
 
 interface CommandWindowProps {

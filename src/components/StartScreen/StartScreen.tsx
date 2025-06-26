@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Logo } from "./Logo";
 import { DropZone } from "./DropZone";
 import "./start-screen.css";
