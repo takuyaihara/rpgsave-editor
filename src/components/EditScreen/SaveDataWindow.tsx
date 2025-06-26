@@ -18,15 +18,13 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({ saveData, query,
     if (!query || !textareaRef.current) return;
 
     const lines = jsonText.split("\n");
-    console.log("nextIndex: " + nextIndex);
     const index =
       nextIndex !== -1
         ? lines.findIndex((line, i) => i > nextIndex && line.includes(query))
         : lines.findIndex(line => line.includes(query));
 
-    console.log("index: " + index);
     if (index !== -1) {
-      const lineHeight = 18;
+      const lineHeight = parseFloat(window.getComputedStyle(textareaRef.current).lineHeight);
       textareaRef.current.scrollTop = index * lineHeight;
     }
   }, [query, jsonText, nextIndex]);

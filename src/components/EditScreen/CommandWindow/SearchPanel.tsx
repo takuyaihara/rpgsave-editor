@@ -26,7 +26,6 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
       const json = JSON.stringify(saveData, null, 2);
       const lines = json.split("\n");
 
-      console.log("localNextIndex: " + localNextIndex);
       const index =
         localNextIndex !== -1
           ? lines.findIndex((line, i) => i > localNextIndex && line.includes(query))
@@ -34,7 +33,6 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
 
       setLocalNextIndex(index);
       setNextIndex(index);
-      console.log("index: " + index);
     }
   };
 
