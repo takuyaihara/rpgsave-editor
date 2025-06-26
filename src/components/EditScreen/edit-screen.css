@@ -1,7 +1,8 @@
 .edit-screen {
   display: flex;
-  gap: 4px;
-  height: 100vh;
+  gap: 10px;
+  margin: 10px;
+  height: 97vh;
 }
 
 .save-data-window {
