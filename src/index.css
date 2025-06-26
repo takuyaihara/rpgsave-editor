@@ -1,14 +1,14 @@
 @font-face {
-  font-family: "PixelMplus10-Regular";
   src: url("/fonts/PixelMplus10-Regular.ttf") format("truetype");
+  font-family: "PixelMplus10-Regular";
   font-display: swap;
 }
 
 html,
 body {
   margin: 0;
+  background-color: #000000;
   padding: 0;
   height: 100%;
   overflow: hidden;
-  background-color: #000000;
 }

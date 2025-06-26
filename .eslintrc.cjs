@@ -15,7 +15,7 @@ module.exports = {
     sourceType: "module",
     ecmaFeatures: { jsx: true },
   },
-  plugins: ["react", "react-refresh", "@typescript-eslint"],
+  plugins: ["react", "react-refresh", "@typescript-eslint", "import"],
   settings: {
     react: {
       version: "detect",
@@ -25,5 +25,12 @@ module.exports = {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "import/order": [
+      "error",
+      {
+        groups: [["builtin", "external"], ["internal"], ["parent", "sibling"], ["index"]],
+        "newlines-between": "always",
+      },
+    ],
   },
 };
