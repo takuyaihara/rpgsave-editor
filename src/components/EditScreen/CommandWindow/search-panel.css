@@ -6,6 +6,7 @@
 }
 
 .search-input {
+  outline: none;
   border: 2px solid white;
   background-color: black;
   padding: 4px 8px;
