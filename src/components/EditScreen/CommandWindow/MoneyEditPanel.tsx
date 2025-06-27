@@ -3,6 +3,7 @@ import "./money-edit-panel.css";
 
 interface MoneyEditPanelProps {
   saveData: object | null;
+  setSaveData: (data: object) => void;
 }
 
 type Gold = {
@@ -11,9 +12,20 @@ type Gold = {
   };
 };
 
-export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({ saveData }) => {
+export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({ saveData, setSaveData }) => {
   const gold = (saveData as Gold)?.party?._gold ?? 0;
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.min(parseInt(e.target.value, 10) || 0, 999999999);
+
+    setSaveData((prev: object) => ({
+      ...prev,
+      party: {
+        ...(prev as Gold).party,
+        _gold: value,
+      },
+    }));
+  };
 
   return (
     <div className="search-row">
@@ -23,6 +35,8 @@ export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({ saveData }) => {
       <input
         id="money-input"
         type="number"
+        min={0}
+        max={999999999}
         value={gold}
         onChange={handleChange}
         className="search-input"

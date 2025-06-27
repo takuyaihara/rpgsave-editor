@@ -6,7 +6,11 @@ import { EditScreen } from "./components/EditScreen/EditScreen.tsx";
 const App: React.FC = () => {
   const [saveData, setSaveData] = useState<object | null>(null);
 
-  return !saveData ? <StartScreen onLoad={setSaveData} /> : <EditScreen saveData={saveData} />;
+  return !saveData ? (
+    <StartScreen onLoad={setSaveData} />
+  ) : (
+    <EditScreen saveData={saveData} setSaveData={setSaveData} />
+  );
 };
 
 export default App;

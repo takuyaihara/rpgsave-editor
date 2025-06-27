@@ -5,6 +5,7 @@ import { MoneyEditPanel } from "./CommandWindow/MoneyEditPanel";
 
 interface CommandWindowProps {
   saveData: object | null;
+  setSaveData: (data: object) => void;
   query: string;
   setQuery: (value: string) => void;
   setNextIndex: (value: number) => void;
@@ -12,6 +13,7 @@ interface CommandWindowProps {
 
 export const CommandWindow: React.FC<CommandWindowProps> = ({
   saveData,
+  setSaveData,
   query,
   setQuery,
   setNextIndex,
@@ -24,7 +26,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
-      <MoneyEditPanel saveData={saveData} />
+      <MoneyEditPanel saveData={saveData} setSaveData={setSaveData} />
     </div>
   );
 };

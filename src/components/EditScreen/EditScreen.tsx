@@ -6,9 +6,10 @@ import "./edit-screen.css";
 
 type EditScreenProps = {
   saveData: object | null;
+  setSaveData: (data: object) => void;
 };
 
-export const EditScreen: React.FC<EditScreenProps> = ({ saveData }) => {
+export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData }) => {
   const [query, setQuery] = useState("");
   const [nextIndex, setNextIndex] = useState<number>(-1);
 
@@ -17,6 +18,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData }) => {
       <SaveDataWindow saveData={saveData} query={query} nextIndex={nextIndex} />
       <CommandWindow
         saveData={saveData}
+        setSaveData={setSaveData}
         query={query}
         setQuery={setQuery}
         setNextIndex={setNextIndex}
