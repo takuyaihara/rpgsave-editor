@@ -1,6 +1,7 @@
 import React from "react";
 
 import { SearchPanel } from "./CommandWindow/SearchPanel";
+import { MoneyEditPanel } from "./CommandWindow/MoneyEditPanel";
 
 interface CommandWindowProps {
   saveData: object | null;
@@ -23,6 +24,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
+      <MoneyEditPanel />
     </div>
   );
 };
