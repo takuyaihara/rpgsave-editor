@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -48,3 +49,18 @@ app.on("activate", () => {
 });
 
 app.whenReady().then(createWindow);
+
+ipcMain.on("save-rpgsave-file", async (_, data: string) => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (!win) return;
+
+  const result = await dialog.showSaveDialog(win, {
+    title: "セーブデータを保存",
+    defaultPath: "Save1.rpgsave",
+    filters: [{ name: "RPGセーブデータ", extensions: ["rpgsave"] }],
+  });
+
+  if (!result.canceled && result.filePath) {
+    fs.writeFileSync(result.filePath, data, "utf-8");
+  }
+});

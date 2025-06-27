@@ -33,7 +33,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
-      <SavePanel />
+      <SavePanel saveData={saveData} />
     </div>
   );
 };
