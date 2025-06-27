@@ -55,9 +55,9 @@ ipcMain.on("save-rpgsave-file", async (_, data: string) => {
   if (!win) return;
 
   const result = await dialog.showSaveDialog(win, {
-    title: "セーブデータを保存",
-    defaultPath: "Save1.rpgsave",
-    filters: [{ name: "RPGセーブデータ", extensions: ["rpgsave"] }],
+    title: "セーブ　しますか？",
+    defaultPath: "file1.rpgsave",
+    filters: [{ name: "RPGツクールMV セーブデータ", extensions: ["rpgsave"] }],
   });
 
   if (!result.canceled && result.filePath) {

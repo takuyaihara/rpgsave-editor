@@ -10,7 +10,7 @@ export const SavePanel: React.FC<SavePanelProps> = ({ saveData }) => {
   const handleClick = () => {
     if (!saveData) return;
 
-    const json = JSON.stringify(saveData, null, 2);
+    const json = JSON.stringify(saveData);
     const compressed = compressToBase64(json);
 
     window.electron?.saveRpgsaveFile(compressed);
