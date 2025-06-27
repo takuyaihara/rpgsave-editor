@@ -3,9 +3,10 @@ import { decompressFromBase64 } from "lz-string";
 
 type DropZoneProps = {
   onLoad: (json: object) => void;
+  setFileName: (name: string) => void;
 };
 
-export const DropZone: React.FC<DropZoneProps> = ({ onLoad }) => {
+export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
   const handleDrop = (e: React.DragEvent<HTMLImageElement>) => {
     e.preventDefault();
 
@@ -24,6 +25,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad }) => {
 
         const json = JSON.parse(jsonStr);
         onLoad(json);
+        setFileName(file.name);
       } catch {
         alert("データが　よみこめなかった！\nこわれている　か　まちがっている　かも　しれないぞ。");
       }

@@ -2,6 +2,7 @@ import React from "react";
 
 import { SearchPanel } from "./CommandWindow/SearchPanel";
 import { MoneyEditPanel } from "./CommandWindow/MoneyEditPanel";
+import { SavePanel } from "./CommandWindow/SavePanel";
 
 interface CommandWindowProps {
   saveData: object | null;
@@ -9,6 +10,7 @@ interface CommandWindowProps {
   query: string;
   setQuery: (value: string) => void;
   setNextIndex: (value: number) => void;
+  fileName: string | null;
 }
 
 export const CommandWindow: React.FC<CommandWindowProps> = ({
@@ -17,6 +19,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
   query,
   setQuery,
   setNextIndex,
+  fileName,
 }) => {
   return (
     <div className="command-window">
@@ -32,6 +35,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
+      <SavePanel saveData={saveData} fileName={fileName} />
     </div>
   );
 };
