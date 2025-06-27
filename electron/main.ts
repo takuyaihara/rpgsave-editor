@@ -50,17 +50,14 @@ app.on("activate", () => {
 
 app.whenReady().then(createWindow);
 
-ipcMain.on("save-rpgsave-file", async (_, data: string) => {
-  const win = BrowserWindow.getFocusedWindow();
-  if (!win) return;
-
-  const result = await dialog.showSaveDialog(win, {
-    title: "セーブ　しますか？",
-    defaultPath: "file1.rpgsave",
-    filters: [{ name: "RPGツクールMV セーブデータ", extensions: ["rpgsave"] }],
+ipcMain.handle("save-rpgsave-file", async (_event, data: string, fileName: string) => {
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    title: "セーブデータを保存",
+    defaultPath: fileName,
+    filters: [{ name: "RPGセーブデータ", extensions: ["rpgsave"] }],
   });
 
-  if (!result.canceled && result.filePath) {
-    fs.writeFileSync(result.filePath, data, "utf-8");
+  if (!canceled && filePath) {
+    fs.writeFileSync(filePath, data, "utf-8");
   }
 });

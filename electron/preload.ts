@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", {
 });
 
 contextBridge.exposeInMainWorld("electron", {
-  saveRpgsaveFile: (data: string) => ipcRenderer.send("save-rpgsave-file", data),
-  openDialog: () => ipcRenderer.invoke("open-dialog"),
+  saveRpgsaveFile: (data: string, fileName: string) => {
+    ipcRenderer.invoke("save-rpgsave-file", data, fileName);
+  },
 });

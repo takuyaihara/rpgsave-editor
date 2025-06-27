@@ -4,16 +4,17 @@ import { compressToBase64 } from "lz-string";
 
 interface SavePanelProps {
   saveData: object | null;
+  fileName: string | null;
 }
 
-export const SavePanel: React.FC<SavePanelProps> = ({ saveData }) => {
+export const SavePanel: React.FC<SavePanelProps> = ({ saveData, fileName }) => {
   const handleClick = () => {
-    if (!saveData) return;
+    if (!saveData || !fileName) return;
 
     const json = JSON.stringify(saveData);
     const compressed = compressToBase64(json);
 
-    window.electron?.saveRpgsaveFile(compressed);
+    window.electron?.saveRpgsaveFile(compressed, fileName);
   };
 
   return (
