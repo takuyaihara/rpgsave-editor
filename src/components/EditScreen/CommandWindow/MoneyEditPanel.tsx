@@ -4,6 +4,8 @@ import "./money-edit-panel.css";
 interface MoneyEditPanelProps {
   saveData: object | null;
   setSaveData: (data: object) => void;
+  setQuery: (value: string) => void;
+  setNextIndex: (value: number) => void;
 }
 
 type Gold = {
@@ -12,7 +14,12 @@ type Gold = {
   };
 };
 
-export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({ saveData, setSaveData }) => {
+export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({
+  saveData,
+  setSaveData,
+  setQuery,
+  setNextIndex,
+}) => {
   const gold = (saveData as Gold)?.party?._gold ?? 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +32,9 @@ export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({ saveData, setSav
         _gold: value,
       },
     }));
+
+    setQuery("_gold");
+    setNextIndex(-1);
   };
 
   return (

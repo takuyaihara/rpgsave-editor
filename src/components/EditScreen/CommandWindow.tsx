@@ -26,7 +26,12 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
-      <MoneyEditPanel saveData={saveData} setSaveData={setSaveData} />
+      <MoneyEditPanel
+        saveData={saveData}
+        setSaveData={setSaveData}
+        setQuery={setQuery}
+        setNextIndex={setNextIndex}
+      />
     </div>
   );
 };
