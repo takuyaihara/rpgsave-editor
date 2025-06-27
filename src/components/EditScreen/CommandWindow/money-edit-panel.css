@@ -1,22 +1,21 @@
-.search-label {
+.money-label {
   color: white;
   font-size: 16px;
   font-family: monospace;
   white-space: nowrap;
 }
 
-.search-input {
+.money-input {
   outline: none;
-  border: 2px solid white;
-  background-color: black;
-  padding: 4px 8px;
-  width: 100%;
+  border: none;
+  border-bottom: 2px solid white;
+  background: transparent;
   color: white;
-  font-size: 16px;
-  font-family: monospace;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
-.search-row {
+.money-row {
   display: flex;
   align-items: center;
   gap: 12px;
