@@ -36,7 +36,12 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
-      <ActorsPanel />
+      <ActorsPanel
+        saveData={saveData}
+        setSaveData={setSaveData}
+        setQuery={setQuery}
+        setNextIndex={setNextIndex}
+      />
       <SavePanel saveData={saveData} fileName={fileName} />
     </div>
   );
