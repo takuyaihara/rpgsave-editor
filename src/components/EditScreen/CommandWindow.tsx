@@ -1,7 +1,7 @@
 import React from "react";
 
 import { SearchPanel } from "./CommandWindow/SearchPanel";
-import { MoneyEditPanel } from "./CommandWindow/MoneyEditPanel";
+import { GoldPanel } from "./CommandWindow/GoldPanel";
 import { ActorsPanel } from "./CommandWindow/ActorsPanel";
 import { SavePanel } from "./CommandWindow/SavePanel";
 
@@ -30,7 +30,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
-      <MoneyEditPanel
+      <GoldPanel
         saveData={saveData}
         setSaveData={setSaveData}
         setQuery={setQuery}
