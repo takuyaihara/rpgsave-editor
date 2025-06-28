@@ -2,6 +2,7 @@ import React from "react";
 
 import { SearchPanel } from "./CommandWindow/SearchPanel";
 import { MoneyEditPanel } from "./CommandWindow/MoneyEditPanel";
+import { ActorsPanel } from "./CommandWindow/ActorsPanel";
 import { SavePanel } from "./CommandWindow/SavePanel";
 
 interface CommandWindowProps {
@@ -35,6 +36,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setNextIndex={setNextIndex}
       />
+      <ActorsPanel />
       <SavePanel saveData={saveData} fileName={fileName} />
     </div>
   );
