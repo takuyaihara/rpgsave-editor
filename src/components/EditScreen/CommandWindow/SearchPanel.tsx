@@ -39,7 +39,7 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
   return (
     <div className="search-row">
       <label htmlFor="search-input" className="search-label">
-        けんさく
+        Search
       </label>
       <input
         id="search-input"

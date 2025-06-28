@@ -42,7 +42,7 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   return (
     <div className="gold-row">
       <label htmlFor="gold-input" className="gold-label">
-        &emsp;おかね
+        Gold
       </label>
       <input
         type="text"

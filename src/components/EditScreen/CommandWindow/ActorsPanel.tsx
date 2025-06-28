@@ -7,9 +7,9 @@ export const ActorsPanel: React.FC = () => {
       <div className="actors-row">
         <label className="actors-label">Actors</label>
         <select className="actors-select">
-          <option value="0">アクター1</option>
-          <option value="1">アクター2</option>
-          <option value="1">アクター3</option>
+          <option value="0">とうきょう たろう</option>
+          <option value="1">おおさか つうてんかく</option>
+          <option value="1">おーいおーいほっかいどう</option>
         </select>
       </div>
 
