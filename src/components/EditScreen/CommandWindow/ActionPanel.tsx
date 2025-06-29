@@ -4,10 +4,11 @@ import { compressToBase64 } from "lz-string";
 
 interface ActionPanelProps {
   saveData: object | null;
+  setSaveData: (data: object | null) => void;
   fileName: string | null;
 }
 
-export const ActionPanel: React.FC<ActionPanelProps> = ({ saveData, fileName }) => {
+export const ActionPanel: React.FC<ActionPanelProps> = ({ saveData, setSaveData, fileName }) => {
   const handleClick = () => {
     if (!saveData || !fileName) return;
 
@@ -22,7 +23,14 @@ export const ActionPanel: React.FC<ActionPanelProps> = ({ saveData, fileName }) 
       <button className="action-button" onClick={handleClick}>
         Save
       </button>
-      <button className="action-button">Reset</button>
+      <button
+        className="action-button"
+        onClick={() => {
+          setSaveData(null);
+        }}
+      >
+        Reset
+      </button>
     </div>
   );
 };

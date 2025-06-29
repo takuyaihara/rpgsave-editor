@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 interface SaveDataWindowProps {
   saveData: object | null;
-  setSaveData: (data: object) => void;
+  setSaveData: (data: object | null) => void;
   query: string;
   nextIndex: number;
 }

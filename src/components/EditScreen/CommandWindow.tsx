@@ -7,7 +7,7 @@ import { ActionPanel } from "./CommandWindow/ActionPanel";
 
 interface CommandWindowProps {
   saveData: object | null;
-  setSaveData: (data: object) => void;
+  setSaveData: (data: object | null) => void;
   query: string;
   setQuery: (value: string) => void;
   silentQuery: boolean;
@@ -50,7 +50,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
       />
-      <ActionPanel saveData={saveData} fileName={fileName} />
+      <ActionPanel saveData={saveData} setSaveData={setSaveData} fileName={fileName} />
     </div>
   );
 };
