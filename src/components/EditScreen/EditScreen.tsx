@@ -17,7 +17,12 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
 
   return (
     <div className="edit-screen">
-      <SaveDataWindow saveData={saveData} query={query} nextIndex={nextIndex} />
+      <SaveDataWindow
+        saveData={saveData}
+        setSaveData={setSaveData}
+        query={query}
+        nextIndex={nextIndex}
+      />
       <CommandWindow
         saveData={saveData}
         setSaveData={setSaveData}

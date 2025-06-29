@@ -22,3 +22,8 @@
   align-items: center;
   gap: 12px;
 }
+
+.gold-label.clickable {
+  cursor: pointer;
+  user-select: none;
+}

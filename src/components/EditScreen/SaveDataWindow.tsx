@@ -2,11 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 
 interface SaveDataWindowProps {
   saveData: object | null;
+  setSaveData: (data: object) => void;
   query: string;
   nextIndex: number;
 }
 
-export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({ saveData, query, nextIndex }) => {
+export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
+  saveData,
+  setSaveData,
+  query,
+  nextIndex,
+}) => {
   const [jsonText, setJsonText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -46,7 +52,17 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({ saveData, query,
       <textarea
         ref={textareaRef}
         value={jsonText}
-        onChange={e => setJsonText(e.target.value)}
+        onChange={e => {
+          const text = e.target.value;
+          setJsonText(text);
+
+          try {
+            const parsed = JSON.parse(text);
+            setSaveData(parsed);
+          } catch (_) {
+            // ignore invalid JSON
+          }
+        }}
         className="json-editor"
         spellCheck={false}
       />
