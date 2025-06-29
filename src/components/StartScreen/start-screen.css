@@ -2,23 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  margin: 0 auto;
-  padding: 1rem;
-  width: 100%;
-  max-width: 600px;
 }
 
 .logo {
-  margin-top: 40px;
-  width: 100%;
-  max-width: 300px;
-  height: auto;
+  margin-top: 50px;
+  max-width: 380px;
 }
 
 .dropzone {
   cursor: pointer;
-  width: 100%;
-  max-width: 360px;
-  height: auto;
+  max-width: 390px;
 }
