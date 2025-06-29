@@ -12,7 +12,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
 
     const file = e.dataTransfer.files[0];
     if (!file || !file.name.endsWith(".rpgsave")) {
-      alert("それは　セーブデータ（.rpgsave）では　ないようだね。");
+      alert("Not a .rpgsave file.");
       return;
     }
 
@@ -27,7 +27,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
         onLoad(json);
         setFileName(file.name);
       } catch {
-        alert("データが　よみこめなかった！\nこわれている　か　まちがっている　かも　しれないぞ。");
+        alert("Cannot load. Maybe broken.");
       }
     };
     reader.readAsText(file);
