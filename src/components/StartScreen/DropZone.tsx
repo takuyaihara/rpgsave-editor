@@ -10,7 +10,13 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
   const handleDrop = (e: React.DragEvent<HTMLImageElement>) => {
     e.preventDefault();
 
-    const file = e.dataTransfer.files[0];
+    const files = e.dataTransfer.files;
+    if (files.length !== 1) {
+      alert("Drop only one file.");
+      return;
+    }
+
+    const file = files[0];
     if (!file || !file.name.endsWith(".rpgsave")) {
       alert("Not a .rpgsave file.");
       return;
