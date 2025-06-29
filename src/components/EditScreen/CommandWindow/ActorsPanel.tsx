@@ -62,12 +62,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   }, []);
 
   const [actorIndex, setActorIndex] = useState(-1);
-  const selectedActor = actorIndex >= 0 ? (actors[actorIndex] ?? null) : null;
-
-  const handleActorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const index = Number(e.target.value);
-    setActorIndex(index);
-  };
+  const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
 
   useEffect(() => {
     const actor = actors[actorIndex];
@@ -77,6 +72,37 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actorIndex]);
+
+  const handleActorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const index = Number(e.target.value);
+    setActorIndex(index);
+  };
+
+  const deepClone = function <T>(data: T): T {
+    return structuredClone(data);
+  };
+
+  const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
+    if (actorIndex < 0) return;
+    setSaveData((prev: SaveData) => {
+      const cloned = deepClone(prev);
+      const actor = cloned.actors?._data?.["@a"]?.[actorIndex];
+      if (actor) actor[key] = value;
+      return cloned;
+    });
+  };
+
+  const changeParamPlus = (index: number, value: number) => {
+    if (actorIndex < 0) return;
+    setSaveData((prev: SaveData) => {
+      const cloned = deepClone(prev);
+      const paramArray = cloned.actors?._data?.["@a"]?.[actorIndex]?._paramPlus?.["@a"];
+      if (paramArray && paramArray.length > index) {
+        paramArray[index] = value;
+      }
+      return cloned;
+    });
+  };
 
   return (
     <div className="param-panel">
@@ -108,7 +134,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
             type="text"
             className="actors-input"
             value={selectedActor?.[key] ?? 0}
-            // onChange={handleChange}
+            onChange={e => changeParam(key, Number(e.target.value))}
           />
         </div>
       ))}
@@ -120,7 +146,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
             type="text"
             className="actors-input"
             value={selectedActor?._paramPlus?.["@a"]?.[index] ?? 0}
-            // onChange={() => {}}
+            onChange={e => changeParamPlus(index, Number(e.target.value))}
           />
         </div>
       ))}
