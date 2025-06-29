@@ -17,6 +17,7 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
+    if (!saveData) return;
     setJsonText(JSON.stringify(saveData, null, 2));
   }, [saveData]);
 
