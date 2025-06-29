@@ -20,7 +20,7 @@ export const SavePanel: React.FC<SavePanelProps> = ({ saveData, fileName }) => {
   return (
     <div className="save-panel">
       <button className="save-button" onClick={handleClick}>
-        ほぞん
+        Save
       </button>
     </div>
   );

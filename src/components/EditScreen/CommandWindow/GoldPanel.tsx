@@ -1,7 +1,7 @@
 import React from "react";
-import "./money-edit-panel.css";
+import "./gold-panel.css";
 
-interface MoneyEditPanelProps {
+interface GoldPanelProps {
   saveData: object | null;
   setSaveData: (data: object) => void;
   setQuery: (value: string) => void;
@@ -14,7 +14,7 @@ type Gold = {
   };
 };
 
-export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({
+export const GoldPanel: React.FC<GoldPanelProps> = ({
   saveData,
   setSaveData,
   setQuery,
@@ -40,9 +40,9 @@ export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({
   };
 
   return (
-    <div className="money-row">
-      <label htmlFor="money-input" className="money-label">
-        &emsp;おかね
+    <div className="gold-row">
+      <label htmlFor="gold-input" className="gold-label">
+        Gold
       </label>
       <input
         type="text"
@@ -51,7 +51,7 @@ export const MoneyEditPanel: React.FC<MoneyEditPanelProps> = ({
         maxLength={9}
         value={gold.toString()}
         onChange={handleChange}
-        className="money-input"
+        className="gold-input"
       />
     </div>
   );
