@@ -52,6 +52,13 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     { index: 7, label: "EVA+" },
   ];
 
+  const maxParams: Record<string, number> = {
+    _hp: 999999,
+    _mp: 9999,
+    _tp: 100,
+    paramPlus: 999,
+  };
+
   const actors = useMemo<(Actor | null)[]>(() => {
     const raw = (saveData as SaveData)?.actors?._data;
     return Array.isArray(raw?.["@a"]) ? raw["@a"] : [];
@@ -132,7 +139,9 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
       {basicParams.map(({ key, label }) => (
         <div className="actors-row" key={key}>
-          <label className="actors-label">{label}</label>
+          <span className="actors-label clickable" onClick={() => changeParam(key, maxParams[key])}>
+            {label}
+          </span>
           <input
             type="text"
             className="actors-input"
@@ -144,7 +153,12 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
       {paramPlusLabels.map(({ index, label }) => (
         <div key={label} className="actors-row">
-          <label className="actors-label">{label}</label>
+          <span
+            className="actors-label clickable"
+            onClick={() => changeParamPlus(index, maxParams.paramPlus)}
+          >
+            {label}
+          </span>
           <input
             type="text"
             className="actors-input"

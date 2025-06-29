@@ -34,3 +34,8 @@
   font-size: 16px;
   font-family: monospace;
 }
+
+.actors-label.clickable {
+  cursor: pointer;
+  user-select: none;
+}
