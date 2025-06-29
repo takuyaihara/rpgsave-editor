@@ -41,7 +41,7 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
     setNextIndex(-1);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeGold = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^\d]/g, "");
     const trimmed = raw.slice(0, 9);
     const value = Math.min(Number(trimmed) || minGold, maxGold);
@@ -69,7 +69,7 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
         pattern="\d*"
         maxLength={9}
         value={gold.toString()}
-        onChange={handleChange}
+        onChange={changeGold}
         className="gold-input"
       />
     </div>
