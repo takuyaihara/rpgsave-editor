@@ -10,6 +10,8 @@ interface CommandWindowProps {
   setSaveData: (data: object) => void;
   query: string;
   setQuery: (value: string) => void;
+  silentQuery: boolean;
+  setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
   fileName: string | null;
 }
@@ -19,6 +21,8 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
   setSaveData,
   query,
   setQuery,
+  silentQuery,
+  setSilentQuery,
   setNextIndex,
   fileName,
 }) => {
@@ -29,6 +33,8 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         query={query}
         setQuery={setQuery}
         setNextIndex={setNextIndex}
+        silentQuery={silentQuery}
+        setSilentQuery={setSilentQuery}
       />
       <GoldPanel
         saveData={saveData}
@@ -40,6 +46,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         saveData={saveData}
         setSaveData={setSaveData}
         setQuery={setQuery}
+        setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
       />
       <SavePanel saveData={saveData} fileName={fileName} />

@@ -5,6 +5,7 @@ interface ActorsPanelProps {
   saveData: object | null;
   setSaveData: (data: object) => void;
   setQuery: (value: string) => void;
+  setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
 }
 
@@ -31,6 +32,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   saveData,
   setSaveData,
   setQuery,
+  setSilentQuery,
   setNextIndex,
 }) => {
   const basicParams: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
@@ -40,14 +42,14 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   ];
 
   const paramPlusLabels: { index: number; label: string }[] = [
-    { index: 0, label: "ATK" },
-    { index: 1, label: "DEF" },
-    { index: 2, label: "MAT" },
-    { index: 3, label: "MDF" },
-    { index: 4, label: "AGI" },
-    { index: 5, label: "LUK" },
-    { index: 6, label: "HIT" },
-    { index: 7, label: "EVA" },
+    { index: 0, label: "ATK+" },
+    { index: 1, label: "DEF+" },
+    { index: 2, label: "MAT+" },
+    { index: 3, label: "MDF+" },
+    { index: 4, label: "AGI+" },
+    { index: 5, label: "LUK+" },
+    { index: 6, label: "HIT+" },
+    { index: 7, label: "EVA+" },
   ];
 
   const actors = useMemo<(Actor | null)[]>(() => {
@@ -67,6 +69,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   useEffect(() => {
     const actor = actors[actorIndex];
     if (actor?._name) {
+      setSilentQuery(true);
       setQuery(`"_name": "${actor._name}"`);
       setNextIndex(-1);
     }

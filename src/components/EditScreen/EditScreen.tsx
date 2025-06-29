@@ -12,6 +12,7 @@ type EditScreenProps = {
 
 export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, fileName }) => {
   const [query, setQuery] = useState("");
+  const [silentQuery, setSilentQuery] = useState(false);
   const [nextIndex, setNextIndex] = useState<number>(-1);
 
   return (
@@ -22,6 +23,8 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
         setSaveData={setSaveData}
         query={query}
         setQuery={setQuery}
+        silentQuery={silentQuery}
+        setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
         fileName={fileName}
       />

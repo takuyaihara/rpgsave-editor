@@ -5,6 +5,8 @@ interface SearchPanelProps {
   saveData: object | null;
   query: string;
   setQuery: (value: string) => void;
+  silentQuery: boolean;
+  setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
 }
 
@@ -12,6 +14,8 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
   saveData,
   query,
   setQuery,
+  silentQuery,
+  setSilentQuery,
   setNextIndex,
 }) => {
   const [localNextIndex, setLocalNextIndex] = useState<number>(-1);
@@ -19,6 +23,7 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
+    setSilentQuery(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -44,7 +49,7 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
       <input
         id="search-input"
         type="text"
-        value={query}
+        value={silentQuery ? "" : query}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         className="search-input"
