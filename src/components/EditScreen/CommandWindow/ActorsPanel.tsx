@@ -3,7 +3,7 @@ import "./actors-panel.css";
 
 interface ActorsPanelProps {
   saveData: object | null;
-  setSaveData: (data: object) => void;
+  setSaveData: (data: object | null) => void;
   setQuery: (value: string) => void;
   setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;

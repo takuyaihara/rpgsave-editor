@@ -6,7 +6,7 @@ import "./edit-screen.css";
 
 type EditScreenProps = {
   saveData: object | null;
-  setSaveData: (data: object) => void;
+  setSaveData: (data: object | null) => void;
   fileName: string | null;
 };
 

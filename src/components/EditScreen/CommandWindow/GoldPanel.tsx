@@ -3,7 +3,7 @@ import "./gold-panel.css";
 
 interface GoldPanelProps {
   saveData: object | null;
-  setSaveData: (data: object) => void;
+  setSaveData: (data: object | null) => void;
   setQuery: (value: string) => void;
   setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
