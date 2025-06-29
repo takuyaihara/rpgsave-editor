@@ -1,13 +1,13 @@
 import React from "react";
-import "./save-panel.css";
+import "./action-panel.css";
 import { compressToBase64 } from "lz-string";
 
-interface SavePanelProps {
+interface ActionPanelProps {
   saveData: object | null;
   fileName: string | null;
 }
 
-export const SavePanel: React.FC<SavePanelProps> = ({ saveData, fileName }) => {
+export const ActionPanel: React.FC<ActionPanelProps> = ({ saveData, fileName }) => {
   const handleClick = () => {
     if (!saveData || !fileName) return;
 
@@ -18,10 +18,11 @@ export const SavePanel: React.FC<SavePanelProps> = ({ saveData, fileName }) => {
   };
 
   return (
-    <div className="save-panel">
-      <button className="save-button" onClick={handleClick}>
+    <div className="action-panel">
+      <button className="action-button" onClick={handleClick}>
         Save
       </button>
+      <button className="action-button">Reset</button>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 import { SearchPanel } from "./CommandWindow/SearchPanel";
 import { GoldPanel } from "./CommandWindow/GoldPanel";
 import { ActorsPanel } from "./CommandWindow/ActorsPanel";
-import { SavePanel } from "./CommandWindow/SavePanel";
+import { ActionPanel } from "./CommandWindow/ActionPanel";
 
 interface CommandWindowProps {
   saveData: object | null;
@@ -50,7 +50,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
       />
-      <SavePanel saveData={saveData} fileName={fileName} />
+      <ActionPanel saveData={saveData} fileName={fileName} />
     </div>
   );
 };
