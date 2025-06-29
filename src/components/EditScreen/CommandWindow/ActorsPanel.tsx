@@ -83,7 +83,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actorIndex]);
 
-  const handleActorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const changeActors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const index = Number(e.target.value);
     setActorIndex(index);
   };
@@ -124,7 +124,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           id="actors-select"
           className="actors-select"
           value={actorIndex}
-          onChange={handleActorChange}
+          onChange={changeActors}
         >
           <option value={-1} disabled>
             —
