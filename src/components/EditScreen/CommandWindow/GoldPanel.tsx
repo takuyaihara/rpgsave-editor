@@ -5,6 +5,7 @@ interface GoldPanelProps {
   saveData: object | null;
   setSaveData: (data: object) => void;
   setQuery: (value: string) => void;
+  setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
 }
 
@@ -18,32 +19,50 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   saveData,
   setSaveData,
   setQuery,
+  setSilentQuery,
   setNextIndex,
 }) => {
   const gold = (saveData as Gold)?.party?._gold ?? 0;
+  const maxGold = 999_999_999;
+  const minGold = 0;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/[^\d]/g, "");
-    const trimmed = raw.slice(0, 9);
-    const value = Math.min(parseInt(trimmed, 10) || 0, 999999999);
-
+  const updateGold = (amount: number) => {
     setSaveData((prev: object) => ({
       ...prev,
       party: {
         ...(prev as Gold).party,
-        _gold: value,
+        _gold: amount,
       },
     }));
+  };
 
+  const scrollGold = () => {
     setQuery("_gold");
     setNextIndex(-1);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/[^\d]/g, "");
+    const trimmed = raw.slice(0, 9);
+    const value = Math.min(Number(trimmed) || minGold, maxGold);
+
+    updateGold(value);
+    setSilentQuery(true);
+    scrollGold();
+  };
+
   return (
     <div className="gold-row">
-      <label htmlFor="gold-input" className="gold-label">
+      <span
+        className="gold-label clickable"
+        onClick={() => {
+          updateGold(maxGold);
+          setSilentQuery(true);
+          scrollGold();
+        }}
+      >
         Gold
-      </label>
+      </span>
       <input
         type="text"
         inputMode="numeric"
