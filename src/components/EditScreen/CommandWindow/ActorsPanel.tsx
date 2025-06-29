@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./actors-panel.css";
 
 interface ActorsPanelProps {
@@ -46,21 +46,37 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     { index: 3, label: "MDF" },
     { index: 4, label: "AGI" },
     { index: 5, label: "LUK" },
+    { index: 6, label: "HIT" },
+    { index: 7, label: "EVA" },
   ];
 
-  const raw = (saveData as SaveData)?.actors?._data;
-  const actors: (Actor | null)[] = Array.isArray(raw?.["@a"]) ? raw["@a"] : [];
+  const actors = useMemo<(Actor | null)[]>(() => {
+    const raw = (saveData as SaveData)?.actors?._data;
+    return Array.isArray(raw?.["@a"]) ? raw["@a"] : [];
+  }, [saveData]);
 
-  const actorOptions = actors.flatMap((a, i) => {
-    const name = a?._name || a?._nickname;
-    return name ? [{ index: i, label: name }] : [];
-  });
+  const actorOptions = actors.reduce<{ index: number; label: string }[]>((acc, actor, i) => {
+    const name = actor?._name || actor?._nickname;
+    if (name) acc.push({ index: i, label: name });
+    return acc;
+  }, []);
 
-  const [actorIndex, setActorIndex] = useState(() =>
-    actorOptions.length > 0 ? actorOptions[0].index : 0
-  );
+  const [actorIndex, setActorIndex] = useState(-1);
+  const selectedActor = actorIndex >= 0 ? (actors[actorIndex] ?? null) : null;
 
-  const selectedActor: Actor | null = actors[actorIndex] ?? null;
+  const handleActorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const index = Number(e.target.value);
+    setActorIndex(index);
+  };
+
+  useEffect(() => {
+    const actor = actors[actorIndex];
+    if (actor?._name) {
+      setQuery(`"_name": "${actor._name}"`);
+      setNextIndex(-1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actorIndex]);
 
   return (
     <div className="param-panel">
@@ -72,8 +88,11 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           id="actors-select"
           className="actors-select"
           value={actorIndex}
-          onChange={e => setActorIndex(Number(e.target.value))}
+          onChange={handleActorChange}
         >
+          <option value={-1} disabled>
+            —
+          </option>
           {actorOptions.map(opt => (
             <option key={opt.index} value={opt.index}>
               {opt.label}
