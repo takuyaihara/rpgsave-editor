@@ -60,9 +60,12 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   };
 
   const actors = useMemo<(Actor | null)[]>(() => {
-    return Array.isArray((saveData as SaveData)?.actors?._data?.["@a"])
-      ? (saveData as SaveData).actors!._data!["@a"]!
-      : [];
+    const rawData = (saveData as SaveData)?.actors?._data;
+
+    if (!rawData) return [];
+    if (Array.isArray(rawData["@a"])) return rawData["@a"];
+    if (Array.isArray(rawData)) return rawData;
+    return [];
   }, [saveData]);
 
   const actorOptions = actors.reduce<{ index: number; label: string }[]>((acc, actor, i) => {
@@ -95,7 +98,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
-      const actor = cloned.actors?._data?.["@a"]?.[actorIndex];
+      const actor = getActorRef(cloned, actorIndex);
       if (actor) actor[key] = value;
       return cloned;
     });
@@ -105,12 +108,30 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
-      const paramArray = cloned.actors?._data?.["@a"]?.[actorIndex]?._paramPlus?.["@a"];
-      if (paramArray && paramArray.length > index) {
+      const actor = getActorRef(cloned, actorIndex);
+      const paramArray = getParamPlusRef(actor);
+      if (paramArray && index in paramArray) {
         paramArray[index] = value;
       }
       return cloned;
     });
+  };
+
+  const getActorRef = (data: SaveData, index: number): Actor | null => {
+    const raw = data.actors?._data;
+    if (Array.isArray(raw?.["@a"])) return raw["@a"][index] ?? null;
+    if (Array.isArray(raw)) return raw[index] ?? null;
+    return null;
+  };
+
+  const getParamPlusRef = (actor: Actor | null): number[] | null => {
+    if (!actor || actor._paramPlus == null) return null;
+
+    const raw = actor._paramPlus;
+    if (Array.isArray(raw)) return raw;
+    if (Array.isArray(raw["@a"])) return raw["@a"];
+
+    return null;
   };
 
   return (
@@ -161,7 +182,13 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           <input
             type="text"
             className="actors-input"
-            value={selectedActor?._paramPlus?.["@a"]?.[index] ?? 0}
+            value={(() => {
+              const raw = selectedActor?._paramPlus;
+              if (!raw) return 0;
+              if (Array.isArray(raw)) return raw[index] ?? 0;
+              if (Array.isArray(raw["@a"])) return raw["@a"][index] ?? 0;
+              return 0;
+            })()}
             onChange={e => changeParamPlus(index, Number(e.target.value))}
           />
         </div>
