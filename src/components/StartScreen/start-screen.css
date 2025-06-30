@@ -9,7 +9,35 @@
   max-width: 380px;
 }
 
+.dropzone-container {
+  display: inline-block;
+  position: relative;
+}
+
 .dropzone {
   cursor: pointer;
   max-width: 390px;
+}
+
+.dropzone-label {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: blink 1.4s steps(1, start) infinite;
+  pointer-events: none;
+  color: white;
+  font-size: 24px;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

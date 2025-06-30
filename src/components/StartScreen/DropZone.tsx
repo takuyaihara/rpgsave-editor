@@ -40,12 +40,15 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
   };
 
   return (
-    <img
-      src="./assets/dropzone.png"
-      className="dropzone"
-      draggable={false}
-      onDrop={handleDrop}
-      onDragOver={e => e.preventDefault()}
-    />
+    <div className="dropzone-container">
+      <img
+        src="./assets/dropzone.png"
+        className="dropzone"
+        draggable={false}
+        onDrop={handleDrop}
+        onDragOver={e => e.preventDefault()}
+      />
+      <div className="dropzone-label">Drop .rpgsave here.</div>
+    </div>
   );
 };
