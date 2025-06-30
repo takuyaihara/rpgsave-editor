@@ -42,8 +42,7 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   };
 
   const changeGold = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/[^\d]/g, "");
-    const trimmed = raw.slice(0, 9);
+    const trimmed = e.target.value.replace(/[^\d]/g, "").slice(0, 9);
     const value = Math.min(Number(trimmed) || minGold, maxGold);
 
     updateGold(value);
