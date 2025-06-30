@@ -10,9 +10,9 @@ interface ActionPanelProps {
 
 export const ActionPanel: React.FC<ActionPanelProps> = ({ saveData, setSaveData, fileName }) => {
   const handleClick = () => {
-    if (!saveData || !fileName) return;
+    if (!(saveData && fileName)) return;
 
-    const json = JSON.stringify(saveData);
+    const json = JSON.stringify(saveData as object);
     const compressed = compressToBase64(json);
 
     window.electron?.saveRpgsaveFile(compressed, fileName);

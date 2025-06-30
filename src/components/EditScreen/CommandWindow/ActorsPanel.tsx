@@ -60,8 +60,9 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   };
 
   const actors = useMemo<(Actor | null)[]>(() => {
-    const raw = (saveData as SaveData)?.actors?._data;
-    return Array.isArray(raw?.["@a"]) ? raw["@a"] : [];
+    return Array.isArray((saveData as SaveData)?.actors?._data?.["@a"])
+      ? (saveData as SaveData).actors!._data!["@a"]!
+      : [];
   }, [saveData]);
 
   const actorOptions = actors.reduce<{ index: number; label: string }[]>((acc, actor, i) => {
@@ -83,14 +84,12 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actorIndex]);
 
-  const handleActorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const changeActors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const index = Number(e.target.value);
     setActorIndex(index);
   };
 
-  const deepClone = function <T>(data: T): T {
-    return structuredClone(data);
-  };
+  const deepClone = <T,>(data: T): T => structuredClone(data);
 
   const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
     if (actorIndex < 0) return;
@@ -124,7 +123,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           id="actors-select"
           className="actors-select"
           value={actorIndex}
-          onChange={handleActorChange}
+          onChange={changeActors}
         >
           <option value={-1} disabled>
             —

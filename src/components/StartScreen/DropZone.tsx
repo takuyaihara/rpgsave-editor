@@ -10,9 +10,15 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
   const handleDrop = (e: React.DragEvent<HTMLImageElement>) => {
     e.preventDefault();
 
-    const file = e.dataTransfer.files[0];
-    if (!file || !file.name.endsWith(".rpgsave")) {
-      alert("それは　セーブデータ（.rpgsave）では　ないようだね。");
+    const files = e.dataTransfer.files;
+    if (files.length !== 1) {
+      alert("Drop only one file.");
+      return;
+    }
+
+    const file = files[0];
+    if (!file.name.endsWith(".rpgsave")) {
+      alert("Not a .rpgsave file.");
       return;
     }
 
@@ -21,25 +27,27 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
       try {
         const compressed = reader.result as string;
         const jsonStr = decompressFromBase64(compressed);
-        if (!jsonStr) throw new Error("Failed to decompress");
-
         const json = JSON.parse(jsonStr);
+
         onLoad(json);
         setFileName(file.name);
       } catch {
-        alert("データが　よみこめなかった！\nこわれている　か　まちがっている　かも　しれないぞ。");
+        alert("Cannot load. Maybe broken.");
       }
     };
     reader.readAsText(file);
   };
 
   return (
-    <img
-      src="./assets/dropzone.png"
-      className="dropzone"
-      draggable={false}
-      onDrop={handleDrop}
-      onDragOver={e => e.preventDefault()}
-    />
+    <div className="dropzone-container">
+      <img
+        src="./assets/dropzone.png"
+        className="dropzone"
+        draggable={false}
+        onDrop={handleDrop}
+        onDragOver={e => e.preventDefault()}
+      />
+      <div className="dropzone-label">Drop .rpgsave here.</div>
+    </div>
   );
 };

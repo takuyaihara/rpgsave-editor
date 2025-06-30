@@ -24,10 +24,13 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
     const value = e.target.value;
     setQuery(value);
     setSilentQuery(false);
+    setLocalNextIndex(-1);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      if (!saveData || !query) return;
+
       const json = JSON.stringify(saveData, null, 2);
       const lines = json.split("\n");
 
