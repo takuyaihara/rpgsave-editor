@@ -9,12 +9,6 @@ interface GoldPanelProps {
   setNextIndex: (value: number) => void;
 }
 
-type Gold = {
-  party?: {
-    _gold?: number;
-  };
-};
-
 export const GoldPanel: React.FC<GoldPanelProps> = ({
   saveData,
   setSaveData,
@@ -22,18 +16,26 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   setSilentQuery,
   setNextIndex,
 }) => {
-  const gold = (saveData as Gold)?.party?._gold ?? 0;
+  const findGold = (data: object | null): number => {
+    try {
+      const match = JSON.stringify(data).match(/"_gold":\s*(\d+)/);
+      return match ? Number(match[1]) : 0;
+    } catch {
+      return 0;
+    }
+  };
+
+  const gold = findGold(saveData);
   const maxGold = 999_999_999;
   const minGold = 0;
 
   const updateGold = (amount: number) => {
-    setSaveData((prev: object) => ({
-      ...prev,
-      party: {
-        ...(prev as Gold).party,
-        _gold: amount,
-      },
-    }));
+    setSaveData((prev: object) => {
+      const json = JSON.stringify(prev);
+      const updated = json.replace(/("_gold":\s*)(\d+(\.\d+)?)/, `$1${amount}`);
+
+      return JSON.parse(updated);
+    });
   };
 
   const scrollGold = () => {
