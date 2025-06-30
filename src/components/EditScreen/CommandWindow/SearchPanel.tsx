@@ -24,6 +24,7 @@ export const SearchPanel: React.FC<SearchPanelProps> = ({
     const value = e.target.value;
     setQuery(value);
     setSilentQuery(false);
+    setLocalNextIndex(-1);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
