@@ -25,23 +25,23 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
     if (!query || !textareaRef.current) return;
 
     const lines = jsonText.split("\n");
-    let index = -1;
-
     const targetIndex =
       nextIndex !== -1
         ? lines.findIndex((line, i) => i > nextIndex && line.includes(query))
         : lines.findIndex(line => line.includes(query));
 
     if (targetIndex !== -1) {
-      if (query.startsWith(`"_name": "`)) {
-        const hpIndex = lines
-          .slice(0, targetIndex)
-          .reverse()
-          .findIndex(line => line.includes(`"_hp"`));
-        if (hpIndex !== -1) index = targetIndex - 1 - hpIndex;
-      } else index = targetIndex;
+      const index = query.startsWith(`"_name": "`)
+        ? (() => {
+            const hpIndex = lines
+              .slice(0, targetIndex)
+              .reverse()
+              .findIndex(line => line.includes(`"_hp"`));
+            return hpIndex !== -1 ? targetIndex - 1 - hpIndex : -1;
+          })()
+        : targetIndex;
 
-      if (index !== -1) {
+      if (index !== -1 && textareaRef.current) {
         const lineHeight = parseFloat(window.getComputedStyle(textareaRef.current).lineHeight);
         textareaRef.current.scrollTop = index * lineHeight;
       }
