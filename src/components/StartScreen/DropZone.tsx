@@ -17,7 +17,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
     }
 
     const file = files[0];
-    if (!file || !file.name.endsWith(".rpgsave")) {
+    if (!file.name.endsWith(".rpgsave")) {
       alert("Not a .rpgsave file.");
       return;
     }
@@ -27,9 +27,8 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
       try {
         const compressed = reader.result as string;
         const jsonStr = decompressFromBase64(compressed);
-        if (!jsonStr) throw new Error("Failed to decompress");
-
         const json = JSON.parse(jsonStr);
+
         onLoad(json);
         setFileName(file.name);
       } catch {
