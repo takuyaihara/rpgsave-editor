@@ -59,10 +59,13 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     paramPlus: 999,
   };
 
-  const actors = useMemo<(Actor | null)[]>(() => {
-    return Array.isArray((saveData as SaveData)?.actors?._data?.["@a"])
-      ? (saveData as SaveData).actors!._data!["@a"]!
-      : [];
+  const actors = useMemo<Actor[]>(() => {
+    const rawData = (saveData as SaveData)?.actors?._data;
+
+    if (!rawData) return [];
+    if (Array.isArray(rawData["@a"])) return rawData["@a"].filter(Boolean);
+    if (Array.isArray(rawData)) return rawData.filter(Boolean);
+    return [];
   }, [saveData]);
 
   const actorOptions = actors.reduce<{ index: number; label: string }[]>((acc, actor, i) => {
