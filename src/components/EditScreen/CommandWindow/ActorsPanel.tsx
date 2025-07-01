@@ -157,6 +157,11 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
         </select>
       </div>
 
+      <div className="actors-row">
+        <span className="actors-label clickable">Level</span>
+        <input type="text" value="0" className="actors-input" />
+      </div>
+
       {basicParams.map(({ key, label }) => (
         <div className="actors-row" key={key}>
           <span className="actors-label clickable" onClick={() => changeParam(key, maxParams[key])}>
