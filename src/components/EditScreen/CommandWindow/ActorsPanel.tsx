@@ -95,26 +95,34 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
   const deepClone = <T,>(data: T): T => structuredClone(data);
 
-  const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
+  const updateActor = (updater: (actor: Actor) => void) => {
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
       const actor = getActorRef(cloned, actorIndex);
-      if (actor) actor[key] = value;
+      if (actor) updater(actor);
       return cloned;
     });
   };
 
+  const changeLevel = (value: number) => {
+    updateActor(actor => {
+      actor._level = value;
+    });
+  };
+
+  const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
+    updateActor(actor => {
+      actor[key] = value;
+    });
+  };
+
   const changeParamPlus = (index: number, value: number) => {
-    if (actorIndex < 0) return;
-    setSaveData((prev: SaveData) => {
-      const cloned = deepClone(prev);
-      const actor = getActorRef(cloned, actorIndex);
+    updateActor(actor => {
       const paramArray = getParamPlusRef(actor);
       if (paramArray && index in paramArray) {
         paramArray[index] = value;
       }
-      return cloned;
     });
   };
 
@@ -160,7 +168,12 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
       <div className="actors-row">
         <span className="actors-label">Level</span>
-        <input type="text" className="actors-input" value={selectedActor?._level ?? ""} />
+        <input
+          type="text"
+          className="actors-input"
+          value={selectedActor?._level ?? 0}
+          onChange={e => changeLevel(Number(e.target.value))}
+        />
       </div>
 
       {basicParams.map(({ key, label }) => (
