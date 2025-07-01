@@ -13,6 +13,7 @@ interface CommandWindowProps {
   silentQuery: boolean;
   setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
+  setJsonKey: (key: string) => void;
   filePath: string | null;
 }
 
@@ -24,6 +25,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
   silentQuery,
   setSilentQuery,
   setNextIndex,
+  setJsonKey,
   filePath,
 }) => {
   return (
@@ -49,6 +51,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setQuery={setQuery}
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
+        setJsonKey={setJsonKey}
       />
       <ActionPanel saveData={saveData} setSaveData={setSaveData} filePath={filePath} />
     </div>

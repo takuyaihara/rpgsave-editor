@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./actors-panel.css";
 
 interface ActorsPanelProps {
@@ -7,6 +7,7 @@ interface ActorsPanelProps {
   setQuery: (value: string) => void;
   setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
+  setJsonKey: (key: string) => void;
 }
 
 type SaveData = {
@@ -35,6 +36,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   setQuery,
   setSilentQuery,
   setNextIndex,
+  setJsonKey,
 }) => {
   const basicParams: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
     { key: "_hp", label: "HP" },
@@ -79,19 +81,27 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   const [actorIndex, setActorIndex] = useState(-1);
   const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
 
-  useEffect(() => {
-    const actor = actors[actorIndex];
-    if (actor?._name) {
-      setSilentQuery(true);
-      setQuery(`"_name": "${actor._name}"`);
-      setNextIndex(-1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actorIndex]);
+  // useEffect(() => {
+  //   const actor = actors[actorIndex];
+  //   if (actor?._name) {
+  //     setSilentQuery(true);
+  //     setQuery(`"_name": "${actor._name}"`);
+  //     setNextIndex(-1);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [actorIndex]);
 
   const changeActors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const index = Number(e.target.value);
     setActorIndex(index);
+
+    const actor = actors[index];
+    if (actor?._name) {
+      setJsonKey("_name");
+      setSilentQuery(true);
+      setQuery(`"_name": "${actor._name}"`);
+      setNextIndex(-1);
+    }
   };
 
   const deepClone = <T,>(data: T): T => structuredClone(data);
@@ -149,6 +159,12 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     return Math.min(Number(trimmed) || 0, max);
   };
 
+  const scroll = (key: string) => {
+    setJsonKey(key);
+    setQuery(`"_name": "${selectedActor?._name}"`);
+    setNextIndex(-1);
+  };
+
   return (
     <div className="param-panel">
       <div className="actors-row">
@@ -173,27 +189,45 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
       </div>
 
       <div className="actors-row">
-        <span className="actors-label clickable" onClick={() => changeLevel(maxParams._level)}>
+        <span
+          className="actors-label clickable"
+          onClick={() => {
+            changeLevel(maxParams._level);
+            scroll("_name");
+          }}
+        >
           Level
         </span>
         <input
           type="text"
           className="actors-input"
           value={selectedActor?._level ?? 0}
-          onChange={e => changeLevel(safeInt(e.target.value, maxParams._level))}
+          onChange={e => {
+            changeLevel(safeInt(e.target.value, maxParams._level));
+            scroll("_name");
+          }}
         />
       </div>
 
       {basicParams.map(({ key, label }) => (
         <div className="actors-row" key={key}>
-          <span className="actors-label clickable" onClick={() => changeParam(key, maxParams[key])}>
+          <span
+            className="actors-label clickable"
+            onClick={() => {
+              changeParam(key, maxParams[key]);
+              scroll("_hp");
+            }}
+          >
             {label}
           </span>
           <input
             type="text"
             className="actors-input"
             value={selectedActor?.[key] ?? 0}
-            onChange={e => changeParam(key, safeInt(e.target.value, maxParams[key]))}
+            onChange={e => {
+              changeParam(key, safeInt(e.target.value, maxParams[key]));
+              scroll("_hp");
+            }}
           />
         </div>
       ))}
@@ -202,7 +236,10 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
         <div key={label} className="actors-row">
           <span
             className="actors-label clickable"
-            onClick={() => changeParamPlus(index, maxParams.paramPlus)}
+            onClick={() => {
+              changeParamPlus(index, maxParams.paramPlus);
+              scroll("_hp");
+            }}
           >
             {label}
           </span>
@@ -216,7 +253,10 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
               if (Array.isArray(raw["@a"])) return raw["@a"][index] ?? 0;
               return 0;
             })()}
-            onChange={e => changeParamPlus(index, safeInt(e.target.value, maxParams.paramPlus))}
+            onChange={e => {
+              changeParamPlus(index, safeInt(e.target.value, maxParams.paramPlus));
+              scroll("_hp");
+            }}
           />
         </div>
       ))}
