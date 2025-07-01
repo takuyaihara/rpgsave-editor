@@ -38,6 +38,19 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   setNextIndex,
   setJsonKey,
 }) => {
+  const deepClone = <T,>(data: T): T => structuredClone(data);
+
+  const safeInt = (value: string, max: number): number => {
+    const trimmed = value.replace(/[^\d]/g, "").slice(0, 9);
+    return Math.min(Number(trimmed) || 0, max);
+  };
+
+  const scroll = (key: string) => {
+    setJsonKey(key);
+    setQuery(`"_name": "${selectedActor?._name}"`);
+    setNextIndex(-1);
+  };
+
   const currentParamsLabels: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
     { key: "_hp", label: "HP" },
     { key: "_mp", label: "MP" },
@@ -63,6 +76,8 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     paramPlus: 999,
   };
 
+  const [actorIndex, setActorIndex] = useState(-1);
+
   const actors = useMemo<(Actor | null)[]>(() => {
     const rawData = (saveData as SaveData)?.actors?._data;
 
@@ -78,25 +93,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     return acc;
   }, []);
 
-  const [actorIndex, setActorIndex] = useState(-1);
-  const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
-
-  const changeActors = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const index = Number(e.target.value);
-    setActorIndex(index);
-
-    const actor = actors[index];
-    if (actor?._name) {
-      setJsonKey("_name");
-      setSilentQuery(true);
-      setQuery(`"_name": "${actor._name}"`);
-      setNextIndex(-1);
-    }
-  };
-
-  const deepClone = <T,>(data: T): T => structuredClone(data);
-
-  const updateActor = (updater: (actor: Actor) => void) => {
+  const updateParams = (updater: (actor: Actor) => void) => {
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
@@ -113,19 +110,19 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   };
 
   const changeLevel = (value: number) => {
-    updateActor(actor => {
+    updateParams(actor => {
       actor._level = value;
     });
   };
 
   const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
-    updateActor(actor => {
+    updateParams(actor => {
       actor[key] = value;
     });
   };
 
   const changeParamPlus = (index: number, value: number) => {
-    updateActor(actor => {
+    updateParams(actor => {
       const raw = actor._paramPlus;
       const paramArray = Array.isArray(raw) ? raw : Array.isArray(raw?.["@a"]) ? raw["@a"] : null;
 
@@ -133,16 +130,20 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     });
   };
 
-  const safeInt = (value: string, max: number): number => {
-    const trimmed = value.replace(/[^\d]/g, "").slice(0, 9);
-    return Math.min(Number(trimmed) || 0, max);
+  const changeActor = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const index = Number(e.target.value);
+    setActorIndex(index);
+
+    const actor = actors[index];
+    if (actor?._name) {
+      setJsonKey("_name");
+      setSilentQuery(true);
+      setQuery(`"_name": "${actor._name}"`);
+      setNextIndex(-1);
+    }
   };
 
-  const scroll = (key: string) => {
-    setJsonKey(key);
-    setQuery(`"_name": "${selectedActor?._name}"`);
-    setNextIndex(-1);
-  };
+  const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
 
   return (
     <div className="param-panel">
@@ -154,7 +155,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           id="actors-select"
           className="actors-select"
           value={actorIndex}
-          onChange={changeActors}
+          onChange={changeActor}
         >
           <option value={-1} disabled>
             —
