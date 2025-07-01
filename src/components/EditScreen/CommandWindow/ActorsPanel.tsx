@@ -38,7 +38,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   setNextIndex,
   setJsonKey,
 }) => {
-  const basicParams: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
+  const currentParamsLabels: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
     { key: "_hp", label: "HP" },
     { key: "_mp", label: "MP" },
     { key: "_tp", label: "TP" },
@@ -80,16 +80,6 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
   const [actorIndex, setActorIndex] = useState(-1);
   const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
-
-  // useEffect(() => {
-  //   const actor = actors[actorIndex];
-  //   if (actor?._name) {
-  //     setSilentQuery(true);
-  //     setQuery(`"_name": "${actor._name}"`);
-  //     setNextIndex(-1);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [actorIndex]);
 
   const changeActors = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const index = Number(e.target.value);
@@ -209,7 +199,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
         />
       </div>
 
-      {basicParams.map(({ key, label }) => (
+      {currentParamsLabels.map(({ key, label }) => (
         <div className="actors-row" key={key}>
           <span
             className="actors-label clickable"
