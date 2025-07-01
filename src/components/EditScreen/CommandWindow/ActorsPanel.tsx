@@ -54,6 +54,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   ];
 
   const maxParams: Record<string, number> = {
+    _level: 99,
     _hp: 999999,
     _mp: 9999,
     _tp: 100,
@@ -167,7 +168,9 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
       </div>
 
       <div className="actors-row">
-        <span className="actors-label">Level</span>
+        <span className="actors-label clickable" onClick={() => changeLevel(maxParams._level)}>
+          Level
+        </span>
         <input
           type="text"
           className="actors-input"
