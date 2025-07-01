@@ -5,6 +5,7 @@ interface SaveDataWindowProps {
   setSaveData: (data: object | null) => void;
   query: string;
   nextIndex: number;
+  jsonKey: React.RefObject<string>;
 }
 
 export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
@@ -12,6 +13,7 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
   setSaveData,
   query,
   nextIndex,
+  jsonKey,
 }) => {
   const [jsonText, setJsonText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,22 +32,28 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
         ? lines.findIndex((line, i) => i > nextIndex && line.includes(query))
         : lines.findIndex(line => line.includes(query));
 
-    if (targetIndex !== -1) {
-      const index = query.startsWith(`"_name": "`)
-        ? (() => {
-            const hpIndex = lines
-              .slice(0, targetIndex)
-              .reverse()
-              .findIndex(line => line.includes(`"_hp"`));
-            return hpIndex !== -1 ? targetIndex - 1 - hpIndex : -1;
-          })()
-        : targetIndex;
+    if (targetIndex === -1) return;
 
-      if (index !== -1 && textareaRef.current) {
-        const lineHeight = parseFloat(window.getComputedStyle(textareaRef.current).lineHeight);
-        textareaRef.current.scrollTop = index * lineHeight;
+    const key = jsonKey.current;
+    let index = targetIndex;
+
+    if (query.startsWith(`"_name":`)) {
+      if (key === "_hp") {
+        const hpIndex = lines
+          .slice(0, targetIndex)
+          .reverse()
+          .findIndex(line => line.includes(`"_hp"`));
+        if (hpIndex !== -1) {
+          index = targetIndex - 1 - hpIndex;
+        }
       }
     }
+
+    if (index !== -1) {
+      const lineHeight = parseFloat(window.getComputedStyle(textareaRef.current).lineHeight);
+      textareaRef.current.scrollTop = index * lineHeight;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, jsonText, nextIndex]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { SaveDataWindow } from "./SaveDataWindow";
 import { CommandWindow } from "./CommandWindow";
@@ -14,6 +14,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
   const [query, setQuery] = useState("");
   const [silentQuery, setSilentQuery] = useState(false);
   const [nextIndex, setNextIndex] = useState<number>(-1);
+  const jsonKey = useRef<string>("");
 
   return (
     <div className="edit-screen">
@@ -22,6 +23,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
         setSaveData={setSaveData}
         query={query}
         nextIndex={nextIndex}
+        jsonKey={jsonKey}
       />
       <CommandWindow
         saveData={saveData}
@@ -31,6 +33,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
         silentQuery={silentQuery}
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
+        setJsonKey={value => (jsonKey.current = value)}
         filePath={filePath}
       />
     </div>
