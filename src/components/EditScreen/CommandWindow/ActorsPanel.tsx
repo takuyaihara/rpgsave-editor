@@ -37,8 +37,8 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   setNextIndex,
 }) => {
   const basicParams: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
-    { key: "_hp", label: "Max HP" },
-    { key: "_mp", label: "Max MP" },
+    { key: "_hp", label: "HP" },
+    { key: "_mp", label: "MP" },
     { key: "_tp", label: "TP" },
   ];
 
