@@ -5,12 +5,12 @@ import { EditScreen } from "./components/EditScreen/EditScreen";
 
 const App: React.FC = () => {
   const [saveData, setSaveData] = useState<object | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [filePath, setFilePath] = useState<string | null>(null);
 
   return !saveData ? (
-    <StartScreen onLoad={setSaveData} setFileName={setFileName} />
+    <StartScreen onLoad={setSaveData} setFilePath={setFilePath} />
   ) : (
-    <EditScreen saveData={saveData} setSaveData={setSaveData} fileName={fileName} />
+    <EditScreen saveData={saveData} setSaveData={setSaveData} filePath={filePath} />
   );
 };
 

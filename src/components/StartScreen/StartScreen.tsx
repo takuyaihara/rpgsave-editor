@@ -6,14 +6,14 @@ import "./start-screen.css";
 
 type StartScreenProps = {
   onLoad: (json: object) => void;
-  setFileName: (name: string) => void;
+  setFilePath: (path: string) => void;
 };
 
-export const StartScreen: React.FC<StartScreenProps> = ({ onLoad, setFileName }) => {
+export const StartScreen: React.FC<StartScreenProps> = ({ onLoad, setFilePath }) => {
   return (
     <div className="start-screen">
       <Logo />
-      <DropZone onLoad={onLoad} setFileName={setFileName} />
+      <DropZone onLoad={onLoad} setFilePath={setFilePath} />
     </div>
   );
 };

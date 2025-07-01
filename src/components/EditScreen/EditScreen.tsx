@@ -7,10 +7,10 @@ import "./edit-screen.css";
 type EditScreenProps = {
   saveData: object | null;
   setSaveData: (data: object | null) => void;
-  fileName: string | null;
+  filePath: string | null;
 };
 
-export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, fileName }) => {
+export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, filePath }) => {
   const [query, setQuery] = useState("");
   const [silentQuery, setSilentQuery] = useState(false);
   const [nextIndex, setNextIndex] = useState<number>(-1);
@@ -31,7 +31,7 @@ export const EditScreen: React.FC<EditScreenProps> = ({ saveData, setSaveData, f
         silentQuery={silentQuery}
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
-        fileName={fileName}
+        filePath={filePath}
       />
     </div>
   );

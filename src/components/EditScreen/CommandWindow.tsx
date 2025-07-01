@@ -13,7 +13,7 @@ interface CommandWindowProps {
   silentQuery: boolean;
   setSilentQuery: (value: boolean) => void;
   setNextIndex: (value: number) => void;
-  fileName: string | null;
+  filePath: string | null;
 }
 
 export const CommandWindow: React.FC<CommandWindowProps> = ({
@@ -24,7 +24,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
   silentQuery,
   setSilentQuery,
   setNextIndex,
-  fileName,
+  filePath,
 }) => {
   return (
     <div className="command-window">
@@ -50,7 +50,7 @@ export const CommandWindow: React.FC<CommandWindowProps> = ({
         setSilentQuery={setSilentQuery}
         setNextIndex={setNextIndex}
       />
-      <ActionPanel saveData={saveData} setSaveData={setSaveData} fileName={fileName} />
+      <ActionPanel saveData={saveData} setSaveData={setSaveData} filePath={filePath} />
     </div>
   );
 };
