@@ -20,6 +20,7 @@ type SaveData = {
 type Actor = {
   _name?: string;
   _nickname?: string;
+  _level?: number;
   _hp?: number;
   _mp?: number;
   _tp?: number;
@@ -158,8 +159,8 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
       </div>
 
       <div className="actors-row">
-        <span className="actors-label clickable">Level</span>
-        <input type="text" value="0" className="actors-input" />
+        <span className="actors-label">Level</span>
+        <input type="text" className="actors-input" value={selectedActor?._level ?? ""} />
       </div>
 
       {basicParams.map(({ key, label }) => (
