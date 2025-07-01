@@ -144,6 +144,11 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     return null;
   };
 
+  const safeInt = (value: string, max: number): number => {
+    const trimmed = value.replace(/[^\d]/g, "").slice(0, 9);
+    return Math.min(Number(trimmed) || 0, max);
+  };
+
   return (
     <div className="param-panel">
       <div className="actors-row">
@@ -175,7 +180,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           type="text"
           className="actors-input"
           value={selectedActor?._level ?? 0}
-          onChange={e => changeLevel(Number(e.target.value))}
+          onChange={e => changeLevel(safeInt(e.target.value, maxParams._level))}
         />
       </div>
 
@@ -188,7 +193,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
             type="text"
             className="actors-input"
             value={selectedActor?.[key] ?? 0}
-            onChange={e => changeParam(key, Number(e.target.value))}
+            onChange={e => changeParam(key, safeInt(e.target.value, maxParams[key]))}
           />
         </div>
       ))}
@@ -211,7 +216,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
               if (Array.isArray(raw["@a"])) return raw["@a"][index] ?? 0;
               return 0;
             })()}
-            onChange={e => changeParamPlus(index, Number(e.target.value))}
+            onChange={e => changeParamPlus(index, safeInt(e.target.value, maxParams.paramPlus))}
           />
         </div>
       ))}
