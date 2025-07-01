@@ -20,6 +20,7 @@ type SaveData = {
 type Actor = {
   _name?: string;
   _nickname?: string;
+  _level?: number;
   _hp?: number;
   _mp?: number;
   _tp?: number;
@@ -36,8 +37,8 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   setNextIndex,
 }) => {
   const basicParams: { key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">; label: string }[] = [
-    { key: "_hp", label: "Max HP" },
-    { key: "_mp", label: "Max MP" },
+    { key: "_hp", label: "HP" },
+    { key: "_mp", label: "MP" },
     { key: "_tp", label: "TP" },
   ];
 
@@ -53,6 +54,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   ];
 
   const maxParams: Record<string, number> = {
+    _level: 99,
     _hp: 999999,
     _mp: 9999,
     _tp: 100,
@@ -94,26 +96,34 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
   const deepClone = <T,>(data: T): T => structuredClone(data);
 
-  const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
+  const updateActor = (updater: (actor: Actor) => void) => {
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
       const actor = getActorRef(cloned, actorIndex);
-      if (actor) actor[key] = value;
+      if (actor) updater(actor);
       return cloned;
     });
   };
 
+  const changeLevel = (value: number) => {
+    updateActor(actor => {
+      actor._level = value;
+    });
+  };
+
+  const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
+    updateActor(actor => {
+      actor[key] = value;
+    });
+  };
+
   const changeParamPlus = (index: number, value: number) => {
-    if (actorIndex < 0) return;
-    setSaveData((prev: SaveData) => {
-      const cloned = deepClone(prev);
-      const actor = getActorRef(cloned, actorIndex);
+    updateActor(actor => {
       const paramArray = getParamPlusRef(actor);
       if (paramArray && index in paramArray) {
         paramArray[index] = value;
       }
-      return cloned;
     });
   };
 
@@ -155,6 +165,18 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="actors-row">
+        <span className="actors-label clickable" onClick={() => changeLevel(maxParams._level)}>
+          Level
+        </span>
+        <input
+          type="text"
+          className="actors-input"
+          value={selectedActor?._level ?? 0}
+          onChange={e => changeLevel(Number(e.target.value))}
+        />
       </div>
 
       {basicParams.map(({ key, label }) => (
