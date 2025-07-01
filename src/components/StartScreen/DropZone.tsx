@@ -3,10 +3,10 @@ import { decompressFromBase64 } from "lz-string";
 
 type DropZoneProps = {
   onLoad: (json: object) => void;
-  setFileName: (name: string) => void;
+  setFilePath: (path: string) => void;
 };
 
-export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
+export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFilePath }) => {
   const handleDrop = (e: React.DragEvent<HTMLImageElement>) => {
     e.preventDefault();
 
@@ -17,7 +17,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
     }
 
     const file = files[0];
-    if (!file.name.endsWith(".rpgsave")) {
+    if (!file.path.endsWith(".rpgsave")) {
       alert("Not a .rpgsave file.");
       return;
     }
@@ -30,7 +30,7 @@ export const DropZone: React.FC<DropZoneProps> = ({ onLoad, setFileName }) => {
         const json = JSON.parse(jsonStr);
 
         onLoad(json);
-        setFileName(file.name);
+        setFilePath(file.path);
       } catch {
         alert("Cannot load. Maybe broken.");
       }
