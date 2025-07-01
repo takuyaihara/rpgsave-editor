@@ -100,7 +100,13 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     if (actorIndex < 0) return;
     setSaveData((prev: SaveData) => {
       const cloned = deepClone(prev);
-      const actor = getActorRef(cloned, actorIndex);
+      const raw = cloned.actors?._data;
+      const actor = Array.isArray(raw?.["@a"])
+        ? (raw["@a"][actorIndex] ?? null)
+        : Array.isArray(raw)
+          ? (raw[actorIndex] ?? null)
+          : null;
+
       if (actor) updater(actor);
       return cloned;
     });
@@ -120,28 +126,11 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
   const changeParamPlus = (index: number, value: number) => {
     updateActor(actor => {
-      const paramArray = getParamPlusRef(actor);
-      if (paramArray && index in paramArray) {
-        paramArray[index] = value;
-      }
+      const raw = actor._paramPlus;
+      const paramArray = Array.isArray(raw) ? raw : Array.isArray(raw?.["@a"]) ? raw["@a"] : null;
+
+      if (paramArray && index in paramArray) paramArray[index] = value;
     });
-  };
-
-  const getActorRef = (data: SaveData, index: number): Actor | null => {
-    const raw = data.actors?._data;
-    if (Array.isArray(raw?.["@a"])) return raw["@a"][index] ?? null;
-    if (Array.isArray(raw)) return raw[index] ?? null;
-    return null;
-  };
-
-  const getParamPlusRef = (actor: Actor | null): number[] | null => {
-    if (!actor || actor._paramPlus == null) return null;
-
-    const raw = actor._paramPlus;
-    if (Array.isArray(raw)) return raw;
-    if (Array.isArray(raw["@a"])) return raw["@a"];
-
-    return null;
   };
 
   const safeInt = (value: string, max: number): number => {
