@@ -1,3 +1,5 @@
+🌐 English version available: [README.en.md](./README.en.md)
+
 ## 🧾 概要（Overview）
 
 **RPGSave Editor** は、  
