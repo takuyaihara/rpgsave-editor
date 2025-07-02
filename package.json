@@ -49,6 +49,7 @@
       "package.json"
     ],
     "directories": {
+      "output": "release",
       "buildResources": "build"
     },
     "win": {
@@ -56,7 +57,11 @@
       "target": [
         "dir"
       ],
-      "sign": false
+      "signAndEditExecutable": false
     }
+  },
+  "description": "A save data editor for RPG Maker MV",
+  "author": {
+    "name": "takuyaihara"
   }
 }
