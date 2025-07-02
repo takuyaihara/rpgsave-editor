@@ -55,7 +55,8 @@
       "icon": "build/icon.ico",
       "target": [
         "dir"
-      ]
+      ],
+      "sign": false
     }
   }
 }
