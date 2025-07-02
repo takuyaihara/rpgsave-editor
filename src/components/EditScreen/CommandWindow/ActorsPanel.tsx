@@ -189,6 +189,11 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
         />
       </div>
 
+      <div className="actors-row">
+        <span className="actors-label clickable">EXP</span>
+        <input type="text" className="actors-input" value="0" />
+      </div>
+
       {currentParamsLabels.map(({ key, label }) => (
         <div className="actors-row" key={key}>
           <span
