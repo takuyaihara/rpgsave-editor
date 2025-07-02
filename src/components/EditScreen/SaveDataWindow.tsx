@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
 interface SaveDataWindowProps {
   saveData: object | null;
@@ -17,11 +17,15 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
 }) => {
   const [jsonText, setJsonText] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lineHeight = 18;
+
+  const baseJsonText = useMemo(() => {
+    return saveData ? JSON.stringify(saveData, null, 2) : "";
+  }, [saveData]);
 
   useEffect(() => {
-    if (!saveData) return;
-    setJsonText(JSON.stringify(saveData, null, 2));
-  }, [saveData]);
+    setJsonText(baseJsonText);
+  }, [baseJsonText]);
 
   useEffect(() => {
     if (!query || !textareaRef.current) return;
@@ -49,29 +53,27 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
       }
     }
 
-    if (index !== -1) {
-      const lineHeight = parseFloat(window.getComputedStyle(textareaRef.current).lineHeight);
-      textareaRef.current.scrollTop = index * lineHeight;
-    }
+    if (index !== -1) textareaRef.current.scrollTop = index * lineHeight;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, jsonText, nextIndex]);
+
+  const changeJsonText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    setJsonText(text);
+    try {
+      const parsed = JSON.parse(text);
+      setSaveData(parsed);
+    } catch (_) {
+      // ignore invalid JSON
+    }
+  };
 
   return (
     <div className="save-data-window">
       <textarea
         ref={textareaRef}
         value={jsonText}
-        onChange={e => {
-          const text = e.target.value;
-          setJsonText(text);
-
-          try {
-            const parsed = JSON.parse(text);
-            setSaveData(parsed);
-          } catch (_) {
-            // ignore invalid JSON
-          }
-        }}
+        onChange={changeJsonText}
         className="json-editor"
         spellCheck={false}
       />
