@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
 interface SaveDataWindowProps {
   saveData: object | null;
@@ -19,10 +19,13 @@ export const SaveDataWindow: React.FC<SaveDataWindowProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const lineHeight = 18;
 
-  useEffect(() => {
-    if (!saveData) return;
-    setJsonText(JSON.stringify(saveData, null, 2));
+  const baseJsonText = useMemo(() => {
+    return saveData ? JSON.stringify(saveData, null, 2) : "";
   }, [saveData]);
+
+  useEffect(() => {
+    setJsonText(baseJsonText);
+  }, [baseJsonText]);
 
   useEffect(() => {
     if (!query || !textareaRef.current) return;
