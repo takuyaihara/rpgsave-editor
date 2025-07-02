@@ -27,7 +27,6 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
 
   const gold = findGold(saveData);
   const maxGold = 999_999_999;
-  const minGold = 0;
 
   const updateGold = (amount: number) => {
     setSaveData((prev: object) => {
@@ -44,10 +43,10 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   };
 
   const changeGold = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const trimmed = e.target.value.replace(/[^\d]/g, "").slice(0, 9);
-    const value = Math.min(Number(trimmed) || minGold, maxGold);
+    const raw = e.target.value.replace(/\D/g, "");
+    const clamped = Math.min(Number(raw || "0"), maxGold);
 
-    updateGold(value);
+    updateGold(clamped);
     setSilentQuery(true);
     scrollGold();
   };
