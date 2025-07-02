@@ -28,6 +28,9 @@ type Actor = {
   _paramPlus?: {
     "@a"?: number[];
   };
+  _exp?: {
+    [classId: string]: number;
+  };
 };
 
 export const ActorsPanel: React.FC<ActorsPanelProps> = ({
@@ -70,6 +73,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
 
   const maxParams: Record<string, number> = {
     _level: 99,
+    _exp: 999999999,
     _hp: 999999,
     _mp: 9999,
     _tp: 100,
@@ -115,6 +119,13 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
     });
   };
 
+  const changeExp = (classId: string, value: number) => {
+    updateParams(actor => {
+      if (!actor._exp) actor._exp = {};
+      actor._exp[classId] = value;
+    });
+  };
+
   const changeParam = (key: keyof Pick<Actor, "_hp" | "_mp" | "_tp">, value: number) => {
     updateParams(actor => {
       actor[key] = value;
@@ -144,6 +155,7 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
   };
 
   const selectedActor = actorIndex >= 0 ? actors[actorIndex] : null;
+  const classId = Object.keys(selectedActor?._exp ?? {}).find(key => key !== "@c");
 
   return (
     <div className="param-panel">
@@ -184,6 +196,27 @@ export const ActorsPanel: React.FC<ActorsPanelProps> = ({
           value={selectedActor?._level ?? 0}
           onChange={e => {
             changeLevel(safeInt(e.target.value, maxParams._level));
+            scroll("_name");
+          }}
+        />
+      </div>
+
+      <div className="actors-row">
+        <span
+          className="actors-label clickable"
+          onClick={() => {
+            if (classId) changeExp(classId, maxParams._exp);
+            scroll("_name");
+          }}
+        >
+          EXP
+        </span>
+        <input
+          type="text"
+          className="actors-input"
+          value={classId ? (selectedActor?._exp?.[classId] ?? 0) : 0}
+          onChange={e => {
+            if (classId) changeExp(classId, safeInt(e.target.value, maxParams._exp));
             scroll("_name");
           }}
         />
