@@ -39,5 +39,23 @@
     "prettier-plugin-css-order": "^2.1.2",
     "typescript": "^5.2.2",
     "vite": "^6.3.5"
+  },
+  "build": {
+    "appId": "com.takuyaihara.rpgsaveeditor",
+    "productName": "rpgsave-editor",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "dir"
+      ]
+    }
   }
 }
