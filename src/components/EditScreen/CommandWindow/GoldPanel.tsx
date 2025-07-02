@@ -16,17 +16,17 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
   setSilentQuery,
   setNextIndex,
 }) => {
-  const findGold = (data: object | null): number => {
-    try {
-      const match = JSON.stringify(data).match(/"_gold":\s*(\d+)/);
-      return match ? Number(match[1]) : 0;
-    } catch {
-      return 0;
-    }
-  };
-
   const gold = findGold(saveData);
   const maxGold = 999_999_999;
+
+  const changeGold = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "");
+    const clamped = Math.min(Number(raw || "0"), maxGold);
+
+    updateGold(clamped);
+    setSilentQuery(true);
+    scroll();
+  };
 
   const updateGold = (amount: number) => {
     setSaveData((prev: object) => {
@@ -37,19 +37,19 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
     });
   };
 
-  const scrollGold = () => {
+  const scroll = () => {
     setQuery("_gold");
     setNextIndex(-1);
   };
 
-  const changeGold = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/\D/g, "");
-    const clamped = Math.min(Number(raw || "0"), maxGold);
-
-    updateGold(clamped);
-    setSilentQuery(true);
-    scrollGold();
-  };
+  function findGold(data: object | null): number {
+    try {
+      const match = JSON.stringify(data).match(/"_gold":\s*(\d+)/);
+      return match ? Number(match[1]) : 0;
+    } catch {
+      return 0;
+    }
+  }
 
   return (
     <div className="gold-row">
@@ -58,7 +58,7 @@ export const GoldPanel: React.FC<GoldPanelProps> = ({
         onClick={() => {
           updateGold(maxGold);
           setSilentQuery(true);
-          scrollGold();
+          scroll();
         }}
       >
         Gold
