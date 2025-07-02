@@ -27,6 +27,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "@vitejs/plugin-react": "^4.2.1",
     "electron": "^30.0.1",
+    "electron-builder": "^26.0.12",
     "esbuild": "^0.25.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^10.1.5",
@@ -38,5 +39,29 @@
     "prettier-plugin-css-order": "^2.1.2",
     "typescript": "^5.2.2",
     "vite": "^6.3.5"
+  },
+  "build": {
+    "appId": "com.takuyaihara.rpgsaveeditor",
+    "productName": "rpgsave-editor",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "dir"
+      ],
+      "signAndEditExecutable": false
+    }
+  },
+  "description": "A save data editor for RPG Maker MV",
+  "author": {
+    "name": "takuyaihara"
   }
 }
