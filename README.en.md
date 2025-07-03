@@ -1,98 +1,85 @@
-# 🧾 Overview
+## 🧾 Overview
 
-**RPGSave Editor** is a desktop app that lets you edit save files (`.rpgsave`) from **RPG Maker MV** games.
+**RPGSave Editor** is a desktop application for editing save files (`.rpgsave`) used in RPG Maker MV.
 
-This tool reads `.rpgsave` files and allows intuitive editing of gold and character parameters via a graphical user interface (GUI).
+You can load a `.rpgsave` file and intuitively edit values such as gold and character parameters through a GUI.  
+After editing, you can re-save the file in its original `.rpgsave` format.
 
-🎯 It is intended for **development support, debugging assistance, and adjustment tasks** — useful for testing and balance checking during game development.
-
----
-
-# 🖼 Screenshots
+## 🖼 Screenshots
 
 ### 🔸 Start Screen
 
-The screen displayed right after launching the app.  
-Drag and drop a `.rpgsave` file to begin loading.
+The initial screen when the app starts.  
+Drag and drop a `.rpgsave` file onto the drop zone at the bottom center to begin editing.
 
 ![Start Screen](./screenshots/start.png)
 
 ---
 
-### 🔸 Save Data Editor Screen
+### 🔸 Save Data Editing Screen
 
-Once loaded, the save data is shown on the left.  
-Gold and character parameters can be edited on the right.
+The left pane displays the contents of the loaded save data, which can be edited directly.  
+On the right, you can search, edit gold, and select characters (Actors) to edit each parameter.  
+Clicking on a parameter label will automatically input the maximum value for that field.
 
 ![Edit Screen](./screenshots/edit.png)
 
----
-
-# 💻 Supported Environment
+## 💻 System Requirements
 
 - Supported OS:
 
-  - ✅ Windows 10 / 11 (64bit)
-  - ⚠️ macOS (planned for future support)
+  - ✅ Windows 10 / 11 (64-bit)
+  - ⚠️ macOS (planned support)
   - ❌ Linux (not supported)
 
-- Supported save file formats:
+- Supported Save File Format:
+
   - ✅ `.rpgsave` (RPG Maker MV only)
   - ❌ `.save` (RPG Maker MZ is not supported)
 
----
+## 📦 Download & Launch
 
-# 📦 Download & How to Launch
-
-1. Download `rpgsave-editor-v1.0.0-win32-x64.zip` from the  
+1. Download `rpgsave-editor-v1.1.0-win32-x64.zip` from the  
    [Releases page](https://github.com/takuyaihara/rpgsave-editor/releases)
 
 2. Right-click the downloaded zip file and select “Extract All”.
 
-3. Open the extracted folder and double-click `rpgsave-editor.exe`.
+3. Open the extracted folder and double-click `rpgsave-editor.exe` to launch.
 
-4. Drag and drop a `.rpgsave` file into the window to start editing.
+4. Drag and drop a `.rpgsave` file onto the **drop zone at the bottom center** to enter the editing screen.
 
-⚠️ On first launch, **Windows SmartScreen** may warn that the app is from an unknown publisher.  
-To continue:
+⚠️ On first launch, you may see a “Unknown publisher” warning from Windows SmartScreen.  
+If so:
 
 - Click “More info”
-- Click the “Run anyway” button
+- Then click the “Run anyway” button
 
----
+## 🧩 Main Features
 
-# 🧩 Main Features
+- Load and parse `.rpgsave` save files
+- Real-time editing in a text editor–like UI for JSON data
+- Search function to jump and re-scan keywords
+- Edit gold value
+- Edit character (Actor) parameters: Level / EXP / HP / MP / TP / Stat bonuses
+- Click parameter labels to auto-fill with the maximum value
+- Save the modified data back to `.rpgsave` (compressed in LZ-String format)
+- Reset button returns to the start screen
 
-- Load and view `.rpgsave` files
-- Display and edit JSON structure in real time (text editor format)
-- Search and find (keyword navigation)
-- Edit gold (`_gold`)
-- Edit various character parameters (HP / MP / TP / buffs)
-- Save changes (compressed back into `.rpgsave` using LZ-String)
-- Reset to the start screen at any time
+## ⚠️ Notes & Disclaimers
 
----
+- This tool edits `.rpgsave` files and re-compresses them for saving.  
+  You can overwrite or save as a new file freely.  
+  ⚠️ Please make a backup of your original file before editing.
 
-# ⚠️ Notes
+- Edited data may cause the game to behave unexpectedly.  
+  Use this tool at your own risk.
 
-- This tool edits `.rpgsave` files and saves them **with compression**.  
-  You can overwrite or save under a new name when saving.  
-  ⚠️ Please make a **backup** of the original file just in case.
+- 🎯 This tool is primarily intended for **development support, debugging, and adjustment tasks**.  
+  It can be useful for testing and balancing games during development.
 
-- Depending on the changes made, the game may not behave correctly.  
-  Use at your own risk.
+- Editing parameters may allow changes beyond what the game originally intended.  
+  It is recommended for use in **testing or development contexts only**.
 
-- Editing character parameters allows **adjustments beyond the game's original design**.  
-  This tool is intended primarily for development and testing purposes.
-
----
-
-# 📜 License
+## 📜 License
 
 MIT License © 2025 [takuyaihara](https://github.com/takuyaihara)
-
----
-
-# 🌐 Language
-
-This is the English version. For the original Japanese README, see [README.md](./README.md).
